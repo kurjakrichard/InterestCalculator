@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package interestcalculator;
+package com.sire.interestcalculator;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
