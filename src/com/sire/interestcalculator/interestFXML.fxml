@@ -31,44 +31,55 @@
                </children></AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Pane id="calculatorPane" fx:id="calculatorPane" prefHeight="356.8" prefWidth="422.4" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Pane id="calculatorPane" fx:id="calculatorPane" prefHeight="356.8" prefWidth="422.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <VBox>
                            <children>
-                              <TableView prefHeight="262.0" prefWidth="427.0">
-                                <columns>
-                                  <TableColumn prefWidth="75.0" text="C1" />
-                                  <TableColumn prefWidth="75.0" text="C2" />
-                                </columns>
-                              </TableView>
+                              <Label alignment="CENTER" prefHeight="38.0" prefWidth="421.0" text="Késedelmi kamat számítása">
+                                 <font>
+                                    <Font name="Calibri Bold" size="24.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="15.0" top="10.0" />
+                                 </padding>
+                              </Label>
                               <HBox prefHeight="170.0" prefWidth="410.0">
                                  <children>
-                                    <VBox alignment="CENTER" prefHeight="170.0" prefWidth="149.0" spacing="14.0">
+                                    <VBox alignment="CENTER" prefHeight="170.0" prefWidth="251.0" spacing="14.0">
                                        <children>
-                                          <Label contentDisplay="CENTER" prefHeight="21.0" prefWidth="75.0" text="Cégnév:" />
-                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Telefonszám:" textAlignment="CENTER" />
-                                       </children>
-                                       <effect>
-                                          <Reflection />
-                                       </effect>
-                                    </VBox>
-                                    <VBox alignment="CENTER" prefHeight="170.0" prefWidth="293.0" spacing="10.0">
-                                       <children>
-                                          <TextField id="inputCompanyName" fx:id="inputCompanyName1" promptText="Kis Kft." />
-                                          <TextField id="inputPhoneNumber" fx:id="inputPhoneNumber1" promptText="+3613584556" />
+                                          <Label prefHeight="18.0" prefWidth="151.0" text="Fizetési határidő:" />
+                                          <Label contentDisplay="CENTER" prefHeight="18.0" prefWidth="154.0" text="Kiegyenlítés napja:" textAlignment="CENTER" />
+                                          <Label contentDisplay="CENTER" prefHeight="22.0" prefWidth="151.0" text="Összeg:" />
                                        </children>
                                     </VBox>
-                                    <VBox alignment="CENTER" prefHeight="170.0" prefWidth="123.0" spacing="10.0">
+                                    <VBox alignment="CENTER" cacheShape="false" centerShape="false" prefHeight="170.0" prefWidth="293.0" scaleShape="false" spacing="10.0">
                                        <children>
-                                          <Button id="addPartner" fx:id="addPartner1" mnemonicParsing="false" onAction="#addPartner" text="Küldés" />
+                                          <DatePicker prefHeight="26.0" prefWidth="298.0" promptText="          ÉÉÉÉ.HH.NN" />
+                                          <DatePicker prefHeight="26.0" prefWidth="298.0" promptText="          ÉÉÉÉ.HH.NN" />
+                                          <TextField id="inputPhoneNumber" fx:id="inputPhoneNumber1" alignment="CENTER_RIGHT" promptText="0,00" />
                                        </children>
                                     </VBox>
                                  </children>
                               </HBox>
                            </children>
                         </VBox>
+                        <VBox alignment="CENTER" layoutX="1.0" layoutY="258.0" prefHeight="186.0" prefWidth="427.0">
+                           <children>
+                              <Button id="addPartner" fx:id="addPartner1" mnemonicParsing="false" onAction="#addPartner" text="Számolás">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <TableView prefHeight="200.0" prefWidth="200.0">
+                                <columns>
+                                  <TableColumn prefWidth="147.99994206428528" text="Időszak" />
+                                  <TableColumn minWidth="4.0" prefWidth="278.3999969482422" text="Késedelmi kamat összege (Ft)" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </VBox>
                      </children></Pane>
-                  <Pane id="ratePane" fx:id="ratePane" prefHeight="356.8" prefWidth="422.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Pane id="ratePane" fx:id="ratePane" prefHeight="356.8" prefWidth="422.4" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <VBox>
                            <children>
