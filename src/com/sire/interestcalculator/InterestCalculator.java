@@ -21,7 +21,7 @@ public class InterestCalculator extends Application{
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("interestFXML.fxml"));
         Scene scene = new Scene(root);
-        stage.setTitle("PhoneBook");
+        stage.setTitle("Kamatmágus");
         stage.setScene(scene);
         stage.show(); 
     }
