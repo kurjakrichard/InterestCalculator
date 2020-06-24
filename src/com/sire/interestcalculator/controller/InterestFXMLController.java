@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -87,10 +88,31 @@ public class InterestFXMLController implements Initializable {
         rateDateCol.setCellFactory(TextFieldTableCell.forTableColumn());
         rateDateCol.setCellValueFactory(new PropertyValueFactory<>("rateDate"));
 
+        rateDateCol.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<InterestRate, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<InterestRate, String> t) {
+                InterestRate actualRate = ((InterestRate) t.getTableView().getItems().get(t.getTablePosition().getRow()));
+                actualRate.setRateDate(t.getNewValue());
+            }
+        }
+        );
+
         TableColumn rateCol = new TableColumn("Kamatkulcs");
         rateCol.setMinWidth(50);
         rateCol.setCellFactory(TextFieldTableCell.forTableColumn());
         rateCol.setCellValueFactory(new PropertyValueFactory<>("rate"));
+
+        rateCol.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<InterestRate, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<InterestRate, String> t) {
+                InterestRate actualRate = ((InterestRate) t.getTableView().getItems().get(t.getTablePosition().getRow()));
+                actualRate.setRate(t.getNewValue());
+            }
+        }
+        );
+
         rateTable.getColumns().addAll(rateDateCol, rateCol);
         rateTable.setItems(rates);
 

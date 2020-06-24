@@ -5,8 +5,6 @@
  */
 package com.sire.interestcalculator.domain;
 
-import java.time.LocalDate;
-
 /**
  *
  * @author balza
