@@ -18,12 +18,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="490.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sire.interestcalculator.controller.InterestFXMLController">
     <children>
-        <Label alignment="CENTER" prefHeight="41.0" prefWidth="615.0" text="Kamatmágus">
-            <font>
-                <Font name="Calibri Bold" size="24.0" />
-            </font>
-        </Label>
-        <SplitPane id="mainSplit" fx:id="mainSplit" dividerPositions="0.29797979797979796" layoutX="14.0" layoutY="42.0" prefHeight="358.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="42.0">
+        <SplitPane id="mainSplit" fx:id="mainSplit" dividerPositions="0.29797979797979796" layoutX="14.0" layoutY="42.0" prefHeight="490.0" prefWidth="630.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>
@@ -85,6 +80,14 @@
                             <children>
                                 <VBox>
                                     <children>
+                              <Label alignment="CENTER" prefHeight="38.0" prefWidth="421.0" text="Kamatok">
+                                 <font>
+                                    <Font name="Calibri Bold" size="24.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="15.0" top="10.0" />
+                                 </padding>
+                              </Label>
                                         <TableView id="rateTable" fx:id="rateTable" editable="true" prefHeight="262.0" prefWidth="427.0">
                                             <placeholder>
                                                 <Label text="Nincs adat." />   
@@ -126,7 +129,7 @@
                                 </VBox>
                             </children>
                         </Pane>
-                        <Pane id="exportPane" fx:id="exportPane1" prefHeight="444.0" prefWidth="427.2" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Pane id="exportPane" fx:id="exportPane" prefHeight="444.0" prefWidth="427.2" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <Button id="exportButton" fx:id="exportButton" layoutX="174.0" layoutY="264.0" mnemonicParsing="false" onAction="#exportList" text="PDF mentése" />
                                 <Label alignment="CENTER" layoutX="143.0" layoutY="43.0" prefHeight="31.0" prefWidth="165.0" text="Exportálás PDF-be" textAlignment="CENTER" wrapText="true">
