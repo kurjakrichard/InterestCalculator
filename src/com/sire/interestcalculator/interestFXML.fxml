@@ -31,7 +31,7 @@
                </children></AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Pane id="calculatorPane" fx:id="calculatorPane" prefHeight="356.8" prefWidth="422.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Pane id="calculatorPane" fx:id="calculatorPane" prefHeight="356.8" prefWidth="422.4" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <VBox>
                            <children>
@@ -54,8 +54,8 @@
                                     </VBox>
                                     <VBox alignment="CENTER" cacheShape="false" centerShape="false" prefHeight="170.0" prefWidth="293.0" scaleShape="false" spacing="10.0">
                                        <children>
-                                          <DatePicker prefHeight="26.0" prefWidth="298.0" promptText="          ÉÉÉÉ.HH.NN" />
-                                          <DatePicker prefHeight="26.0" prefWidth="298.0" promptText="          ÉÉÉÉ.HH.NN" />
+                                          <DatePicker prefHeight="26.0" prefWidth="298.0" promptText="          ÉÉÉÉ.HH.NN" showWeekNumbers="true" />
+                                          <DatePicker prefHeight="26.0" prefWidth="298.0" promptText="          ÉÉÉÉ.HH.NN" showWeekNumbers="true" />
                                           <TextField id="inputPhoneNumber" fx:id="inputPhoneNumber1" alignment="CENTER_RIGHT" promptText="0,00" />
                                        </children>
                                     </VBox>
@@ -79,7 +79,7 @@
                            </children>
                         </VBox>
                      </children></Pane>
-                  <Pane id="ratePane" fx:id="ratePane" prefHeight="356.8" prefWidth="422.4" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Pane id="ratePane" fx:id="ratePane" prefHeight="356.8" prefWidth="422.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <VBox>
                            <children>
@@ -91,18 +91,24 @@
                               </TableView>
                               <HBox prefHeight="170.0" prefWidth="410.0">
                                  <children>
-                                    <VBox alignment="CENTER" prefHeight="170.0" prefWidth="149.0" spacing="14.0">
+                                    <VBox alignment="CENTER" prefHeight="170.0" prefWidth="91.0" spacing="14.0">
                                        <children>
-                                          <Label contentDisplay="CENTER" prefHeight="21.0" prefWidth="75.0" text="Dátum:" />
-                                          <Label contentDisplay="CENTER" prefHeight="21.0" prefWidth="75.0" text="Kamat:" />
+                                          <Label contentDisplay="CENTER" prefHeight="21.0" prefWidth="75.0" text="Dátum:">
+                                             <VBox.margin>
+                                                <Insets left="10.0" />
+                                             </VBox.margin></Label>
+                                          <Label contentDisplay="CENTER" prefHeight="21.0" prefWidth="75.0" text="Kamat:">
+                                             <VBox.margin>
+                                                <Insets left="10.0" />
+                                             </VBox.margin></Label>
                                        </children>
                                        <effect>
                                           <Reflection />
                                        </effect>
                                     </VBox>
-                                    <VBox alignment="CENTER" prefHeight="170.0" prefWidth="293.0" spacing="10.0">
+                                    <VBox alignment="CENTER" prefHeight="170.0" prefWidth="257.0" spacing="10.0">
                                        <children>
-                                          <DatePicker id="inputRateDate" fx:id="inputRateDate" prefHeight="26.0" prefWidth="252.0" />
+                                          <DatePicker id="inputRateDate" fx:id="inputRateDate" prefHeight="26.0" prefWidth="252.0" promptText="ÉÉÉÉ.HH.NN" />
                                           <TextField id="inputRate" fx:id="inputRate" promptText="+3613584556" />
                                        </children>
                                     </VBox>
