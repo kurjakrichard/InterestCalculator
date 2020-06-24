@@ -17,12 +17,18 @@ public class InterestRate {
     private String rateDate;
     private String rate;
 
+    public InterestRate() {
+        this.id = 0;
+        this.rateDate = "";
+        this.rate = "";
+    }
+
     public InterestRate(String rateDate, String rate) {
         this.id = 0;
         this.rateDate = rateDate;
         this.rate = rate;
-    }  
-    
+    }
+
     public InterestRate(int id, String rateDate, String rate) {
         this.id = id;
         this.rateDate = rateDate;
