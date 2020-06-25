@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="488.0" prefWidth="629.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sire.interestcalculator.controller.InterestFXMLController">
+<AnchorPane id="AnchorPane" prefHeight="490.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sire.interestcalculator.controller.InterestFXMLController">
     <children>
         <Label alignment="CENTER" prefHeight="41.0" prefWidth="615.0" text="Kamatmágus">
             <font>

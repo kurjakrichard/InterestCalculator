@@ -83,12 +83,12 @@ public class InterestFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         TableColumn rateDateCol = new TableColumn("Dátum");
-        rateDateCol.setMinWidth(150);
+        rateDateCol.setMinWidth(50);
         rateDateCol.setCellFactory(TextFieldTableCell.forTableColumn());
         rateDateCol.setCellValueFactory(new PropertyValueFactory<>("rateDate"));
 
         TableColumn rateCol = new TableColumn("Kamatkulcs");
-        rateCol.setMinWidth(150);
+        rateCol.setMinWidth(50);
         rateCol.setCellFactory(TextFieldTableCell.forTableColumn());
         rateCol.setCellValueFactory(new PropertyValueFactory<>("rate"));
         rateTable.getColumns().addAll(rateDateCol, rateCol);
