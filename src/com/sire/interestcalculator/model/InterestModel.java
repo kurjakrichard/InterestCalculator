@@ -79,7 +79,7 @@ public class InterestModel {
                 ResultSet rs = stmt.executeQuery(sql)) {
             // loop through the result set
             while (rs.next()) {
-                InterestRateString actualRateString = new InterestRateString(rs.getInt("id"), rs.getString("rateDate"), rs.getString("rate"));
+                InterestRateString actualRateString = new InterestRateString(rs.getInt("id"), rs.getString("rateDate"), String.valueOf(rs.getDouble("rate")));
                 rates.add(actualRateString);
                 // System.out.println(rs.getInt("id") + "\t"
                 //       + rs.getString("companyName") + "\t"
@@ -97,7 +97,7 @@ public class InterestModel {
      * @param partner
      */
     public void addRate(InterestRate rate) {
-        String sql = "INSERT INTO rates(rateDate,rate) VALUES(?,?)";
+        String sql = "INSERT INTO rates(rateDate, rate) VALUES(?,?)";
         if (conn != null) {
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setString(1, rate.getRateDate());
@@ -112,7 +112,7 @@ public class InterestModel {
     }
 
     public void updateRate(InterestRate rate) {
-        String sql = "UPDATE rate SET rateDate = ?, rate = ? WHERE id = ?";
+        String sql = "UPDATE rates SET rateDate = ?, rate = ? WHERE id = ?";
         if (conn != null) {
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setString(1, rate.getRateDate());

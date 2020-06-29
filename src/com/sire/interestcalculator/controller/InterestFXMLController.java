@@ -7,6 +7,7 @@ package com.sire.interestcalculator.controller;
 
 import com.sire.interestcalculator.domain.InterestRate;
 import com.sire.interestcalculator.domain.InterestRateString;
+import com.sire.interestcalculator.model.InterestModel;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
@@ -77,17 +78,17 @@ public class InterestFXMLController implements Initializable {
     @FXML
     private Button calculation;
 //</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="class-variables">
     private final String MENU_MAIN = "Kamat kalkulátor";
     private final String MENU_CALCULATOR = "Kamat számítás";
     private final String MENU_INTEREST = "Kamatok";
     private final String MENU_EXPORT = "Exportálás";
     private final String MENU_EXIT = "Kilépés";
-    
-    private final ObservableList<InterestRateString> rates = FXCollections.observableArrayList(
-            new InterestRateString("2020.01.01", "0.4"),
-            new InterestRateString("2020.06.01", "0.6"),
-            new InterestRateString("2020.09.01", "0.5")
-    );
+    private InterestModel interestModel = new InterestModel();
+//</editor-fold>
+
+    private final ObservableList<InterestRateString> rates = FXCollections.observableArrayList();
 
     /**
      * Initializes the controller class.
@@ -99,15 +100,15 @@ public class InterestFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         setTableData();
         setMenuData();
-        
+
     }
-    
+
     private void setTableData() {
         TableColumn rateDateCol = new TableColumn("Dátum");
         rateDateCol.setMinWidth(50);
         rateDateCol.setCellFactory(TextFieldTableCell.forTableColumn());
         rateDateCol.setCellValueFactory(new PropertyValueFactory<>("rateDate"));
-        
+
         rateDateCol.setOnEditCommit(
                 new EventHandler<TableColumn.CellEditEvent<InterestRateString, String>>() {
             @Override
@@ -117,12 +118,12 @@ public class InterestFXMLController implements Initializable {
             }
         }
         );
-        
+
         TableColumn rateCol = new TableColumn("Kamatkulcs");
         rateCol.setMinWidth(50);
         rateCol.setCellFactory(TextFieldTableCell.forTableColumn());
         rateCol.setCellValueFactory(new PropertyValueFactory<>("rate"));
-        
+
         rateCol.setOnEditCommit(
                 new EventHandler<TableColumn.CellEditEvent<InterestRateString, String>>() {
             @Override
@@ -132,30 +133,31 @@ public class InterestFXMLController implements Initializable {
             }
         }
         );
-        
+
         rateTable.getColumns().addAll(rateDateCol, rateCol);
+        rates.addAll(interestModel.selectAll());
         rateTable.setItems(rates);
     }
-    
+
     private void setMenuData() {
         TreeItem<String> treeItemRoot1 = new TreeItem<>("Menü");
         TreeView<String> treeView = new TreeView<>(treeItemRoot1);
         treeView.setShowRoot(false);
-        
+
         Node exitNode = new ImageView(new Image(getClass().getResourceAsStream("/Actions-application-exit-icon.png")));
-        
+
         TreeItem<String> nodeItemA = new TreeItem<>(MENU_MAIN);
         TreeItem<String> nodeItemB = new TreeItem<>(MENU_EXIT, exitNode);
         nodeItemA.setExpanded(true);
-        
+
         TreeItem<String> nodeItemA1 = new TreeItem<>(MENU_CALCULATOR);
         TreeItem<String> nodeItemA2 = new TreeItem<>(MENU_INTEREST);
         TreeItem<String> nodeItemA3 = new TreeItem<>(MENU_EXPORT);
-        
+
         nodeItemA.getChildren().addAll(nodeItemA1, nodeItemA2, nodeItemA3);
         treeItemRoot1.getChildren().addAll(nodeItemA, nodeItemB);
         menuPane.getChildren().add(treeView);
-        
+
         treeView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
@@ -186,28 +188,28 @@ public class InterestFXMLController implements Initializable {
                 }
             }
         });
-        
+
     }
-    
+
     private void setMenuVisible(boolean calculatorPaneVisible, boolean ratePaneVisible, boolean exportPaneVisible) {
         calculatorPane.setVisible(calculatorPaneVisible);
         ratePane.setVisible(ratePaneVisible);
         exportPane.setVisible(exportPaneVisible);
     }
-    
+
     @FXML
     private void addRate(ActionEvent event) {
-        if ( Double.parseDouble(inputRate.getText()) > -1 && Double.parseDouble(inputRate.getText()) < 1) {
+        if (Double.parseDouble(inputRate.getText()) > -1 && Double.parseDouble(inputRate.getText()) < 1) {
             InterestRate newRate = new InterestRate(inputRateDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")), Double.parseDouble(inputRate.getText()));
-            InterestRateString newRateString = new InterestRateString(inputRateDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")), inputRate.getText());         
+            InterestRateString newRateString = new InterestRateString(inputRateDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")), inputRate.getText());
             rates.add(newRateString);
-            //partnerModel.addPartner(newPartner);
+            interestModel.addRate(newRate);
             clearInputRateFields();
         } else {
             //alert("Adj meg egy partnernevet!");
         }
     }
-    
+
     @FXML
     private void exportList(ActionEvent event) {
         String fileName = inputFilename.getText();
@@ -220,18 +222,18 @@ public class InterestFXMLController implements Initializable {
             //alert("Adj meg egy fájlnevet!");
         }
     }
-    
+
     @FXML
     private void alertButton(ActionEvent event) {
     }
-    
+
     @FXML
     private void calculation(ActionEvent event) {
     }
-    
-        private void clearInputRateFields() {
+
+    private void clearInputRateFields() {
         inputRateDate.getEditor().clear();
         inputRate.clear();
     }
-    
+
 }
