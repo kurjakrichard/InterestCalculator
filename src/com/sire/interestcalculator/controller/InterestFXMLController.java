@@ -7,6 +7,7 @@ package com.sire.interestcalculator.controller;
 
 import com.sire.interestcalculator.domain.InterestRate;
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -51,8 +52,6 @@ public class InterestFXMLController implements Initializable {
     @FXML
     private TextField inputPhoneNumber1;
     @FXML
-    private Button addPartner1;
-    @FXML
     private Pane ratePane;
     @FXML
     private DatePicker inputRateDate;
@@ -74,14 +73,15 @@ public class InterestFXMLController implements Initializable {
     private TableView rateTable;
     @FXML
     private Pane exportPane;
+    @FXML
+    private Button calculation;
 //</editor-fold>
-
     private final String MENU_MAIN = "Kamat kalkulátor";
-    private final String MENU_PROGRAM = "Kamat számítás";
+    private final String MENU_CALCULATOR = "Kamat számítás";
     private final String MENU_INTEREST = "Kamatok";
     private final String MENU_EXPORT = "Exportálás";
     private final String MENU_EXIT = "Kilépés";
-
+    
     private final ObservableList<InterestRate> rates = FXCollections.observableArrayList(
             new InterestRate("2020.01.01", "0.4"),
             new InterestRate("2020.06.01", "0.6"),
@@ -98,14 +98,15 @@ public class InterestFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         setTableData();
         setMenuData();
+        
     }
-
+    
     private void setTableData() {
         TableColumn rateDateCol = new TableColumn("Dátum");
         rateDateCol.setMinWidth(50);
         rateDateCol.setCellFactory(TextFieldTableCell.forTableColumn());
         rateDateCol.setCellValueFactory(new PropertyValueFactory<>("rateDate"));
-
+        
         rateDateCol.setOnEditCommit(
                 new EventHandler<TableColumn.CellEditEvent<InterestRate, String>>() {
             @Override
@@ -115,12 +116,12 @@ public class InterestFXMLController implements Initializable {
             }
         }
         );
-
+        
         TableColumn rateCol = new TableColumn("Kamatkulcs");
         rateCol.setMinWidth(50);
         rateCol.setCellFactory(TextFieldTableCell.forTableColumn());
         rateCol.setCellValueFactory(new PropertyValueFactory<>("rate"));
-
+        
         rateCol.setOnEditCommit(
                 new EventHandler<TableColumn.CellEditEvent<InterestRate, String>>() {
             @Override
@@ -130,30 +131,30 @@ public class InterestFXMLController implements Initializable {
             }
         }
         );
-
+        
         rateTable.getColumns().addAll(rateDateCol, rateCol);
         rateTable.setItems(rates);
     }
-
+    
     private void setMenuData() {
         TreeItem<String> treeItemRoot1 = new TreeItem<>("Menü");
         TreeView<String> treeView = new TreeView<>(treeItemRoot1);
         treeView.setShowRoot(false);
-
+        
         Node exitNode = new ImageView(new Image(getClass().getResourceAsStream("/Actions-application-exit-icon.png")));
-
+        
         TreeItem<String> nodeItemA = new TreeItem<>(MENU_MAIN);
         TreeItem<String> nodeItemB = new TreeItem<>(MENU_EXIT, exitNode);
         nodeItemA.setExpanded(true);
-
-        TreeItem<String> nodeItemA1 = new TreeItem<>(MENU_PROGRAM);
+        
+        TreeItem<String> nodeItemA1 = new TreeItem<>(MENU_CALCULATOR);
         TreeItem<String> nodeItemA2 = new TreeItem<>(MENU_INTEREST);
         TreeItem<String> nodeItemA3 = new TreeItem<>(MENU_EXPORT);
-
+        
         nodeItemA.getChildren().addAll(nodeItemA1, nodeItemA2, nodeItemA3);
         treeItemRoot1.getChildren().addAll(nodeItemA, nodeItemB);
         menuPane.getChildren().add(treeView);
-
+        
         treeView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
@@ -168,7 +169,7 @@ public class InterestFXMLController implements Initializable {
                         } catch (Exception e) {
                         }
                         break;
-                        case MENU_PROGRAM:
+                        case MENU_CALCULATOR:
                             setMenuVisible(true, false, false);
                             break;
                         case MENU_INTEREST:
@@ -184,29 +185,51 @@ public class InterestFXMLController implements Initializable {
                 }
             }
         });
-
+        
     }
-
-    private void setMenuVisible(boolean partnerPaneVisible, boolean interestPaneVisible, boolean exportPaneVisible) {
-        calculatorPane.setVisible(partnerPaneVisible);
-        ratePane.setVisible(interestPaneVisible);
+    
+    private void setMenuVisible(boolean calculatorPaneVisible, boolean ratePaneVisible, boolean exportPaneVisible) {
+        calculatorPane.setVisible(calculatorPaneVisible);
+        ratePane.setVisible(ratePaneVisible);
         exportPane.setVisible(exportPaneVisible);
     }
-
-    @FXML
-    private void addPartner(ActionEvent event) {
-    }
-
+    
     @FXML
     private void addRate(ActionEvent event) {
+        if (inputRate.getText().length() > 1) {
+            InterestRate newRate = new InterestRate(inputRateDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")), inputRate.getText());
+            rates.add(newRate);
+            //partnerModel.addPartner(newPartner);
+            clearInputRateFields();
+        } else {
+            //alert("Adj meg egy partnernevet!");
+        }
     }
-
+    
     @FXML
     private void exportList(ActionEvent event) {
+        String fileName = inputFilename.getText();
+        fileName = fileName.replaceAll("ˇ\\s+", "");
+        if (fileName != null && !fileName.equals("")) {
+            PdfGeneration pdfCreator = new PdfGeneration();
+            pdfCreator.pdfGeneration(fileName, rates);
+            inputFilename.clear();
+        } else {
+            //alert("Adj meg egy fájlnevet!");
+        }
     }
-
+    
     @FXML
     private void alertButton(ActionEvent event) {
     }
-
+    
+    @FXML
+    private void calculation(ActionEvent event) {
+    }
+    
+        private void clearInputRateFields() {
+        inputRateDate.getEditor().clear();
+        inputRate.clear();
+    }
+    
 }
