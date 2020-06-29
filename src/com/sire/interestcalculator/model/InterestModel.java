@@ -7,6 +7,7 @@ package com.sire.interestcalculator.model;
 
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import com.sire.interestcalculator.domain.InterestRate;
+import com.sire.interestcalculator.domain.InterestRateString;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -55,7 +56,7 @@ public class InterestModel {
         String sql = "CREATE TABLE IF NOT EXISTS rates (\n"
                 + "    id integer PRIMARY KEY,\n"
                 + "    rateDate text NOT NULL,\n"
-                + "    rate text NOT NULL\n"
+                + "    rate real NOT NULL\n"
                 + ");";
         if (conn != null) {
             try (Statement stmt = conn.createStatement()) {
@@ -69,17 +70,17 @@ public class InterestModel {
     }
 
     /**
-     * select all rows in the partners table
+     * select all rows in the rates table
      */
-    public ArrayList<InterestRate> selectAll() {
-        String sql = "SELECT * FROM partners";
-        ArrayList<InterestRate> partners = new ArrayList<>();
+    public ArrayList<InterestRateString> selectAll() {
+        String sql = "SELECT * FROM rates";
+        ArrayList<InterestRateString> rates = new ArrayList<>();
         try (Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
             // loop through the result set
             while (rs.next()) {
-                InterestRate actualRate = new InterestRate(rs.getInt("id"), rs.getString("rateDate"), rs.getString("rate"));
-                partners.add(actualRate);
+                InterestRateString actualRateString = new InterestRateString(rs.getInt("id"), rs.getString("rateDate"), rs.getString("rate"));
+                rates.add(actualRateString);
                 // System.out.println(rs.getInt("id") + "\t"
                 //       + rs.getString("companyName") + "\t"
                 //     + rs.getString("phoneNumber"));
@@ -87,7 +88,7 @@ public class InterestModel {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return partners;
+        return rates;
     }
 
     /**
@@ -96,11 +97,11 @@ public class InterestModel {
      * @param partner
      */
     public void addRate(InterestRate rate) {
-        String sql = "INSERT INTO partners(companyName,phoneNumber) VALUES(?,?)";
+        String sql = "INSERT INTO rates(rateDate,rate) VALUES(?,?)";
         if (conn != null) {
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setString(1, rate.getRateDate());
-                pstmt.setString(2, rate.getRate());
+                pstmt.setDouble(2, rate.getRate());
                 pstmt.executeUpdate();
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -111,11 +112,11 @@ public class InterestModel {
     }
 
     public void updateRate(InterestRate rate) {
-        String sql = "UPDATE partners SET companyName = ?, phoneNumber = ? WHERE id = ?";
+        String sql = "UPDATE rate SET rateDate = ?, rate = ? WHERE id = ?";
         if (conn != null) {
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setString(1, rate.getRateDate());
-                pstmt.setString(2, rate.getRate());
+                pstmt.setDouble(2, rate.getRate());
                 pstmt.setInt(3, rate.getId());
                 pstmt.executeUpdate();
             } catch (SQLException e) {

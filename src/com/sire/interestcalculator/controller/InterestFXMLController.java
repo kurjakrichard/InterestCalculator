@@ -6,6 +6,7 @@
 package com.sire.interestcalculator.controller;
 
 import com.sire.interestcalculator.domain.InterestRate;
+import com.sire.interestcalculator.domain.InterestRateString;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
@@ -82,10 +83,10 @@ public class InterestFXMLController implements Initializable {
     private final String MENU_EXPORT = "Exportálás";
     private final String MENU_EXIT = "Kilépés";
     
-    private final ObservableList<InterestRate> rates = FXCollections.observableArrayList(
-            new InterestRate("2020.01.01", "0.4"),
-            new InterestRate("2020.06.01", "0.6"),
-            new InterestRate("2020.09.01", "0.5")
+    private final ObservableList<InterestRateString> rates = FXCollections.observableArrayList(
+            new InterestRateString("2020.01.01", "0.4"),
+            new InterestRateString("2020.06.01", "0.6"),
+            new InterestRateString("2020.09.01", "0.5")
     );
 
     /**
@@ -108,11 +109,11 @@ public class InterestFXMLController implements Initializable {
         rateDateCol.setCellValueFactory(new PropertyValueFactory<>("rateDate"));
         
         rateDateCol.setOnEditCommit(
-                new EventHandler<TableColumn.CellEditEvent<InterestRate, String>>() {
+                new EventHandler<TableColumn.CellEditEvent<InterestRateString, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<InterestRate, String> t) {
-                InterestRate actualRate = ((InterestRate) t.getTableView().getItems().get(t.getTablePosition().getRow()));
-                actualRate.setRateDate(t.getNewValue());
+            public void handle(TableColumn.CellEditEvent<InterestRateString, String> t) {
+                InterestRateString actualRateString = ((InterestRateString) t.getTableView().getItems().get(t.getTablePosition().getRow()));
+                actualRateString.setRateDate(t.getNewValue());
             }
         }
         );
@@ -123,11 +124,11 @@ public class InterestFXMLController implements Initializable {
         rateCol.setCellValueFactory(new PropertyValueFactory<>("rate"));
         
         rateCol.setOnEditCommit(
-                new EventHandler<TableColumn.CellEditEvent<InterestRate, String>>() {
+                new EventHandler<TableColumn.CellEditEvent<InterestRateString, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<InterestRate, String> t) {
-                InterestRate actualRate = ((InterestRate) t.getTableView().getItems().get(t.getTablePosition().getRow()));
-                actualRate.setRate(t.getNewValue());
+            public void handle(TableColumn.CellEditEvent<InterestRateString, String> t) {
+                InterestRateString actualRateString = ((InterestRateString) t.getTableView().getItems().get(t.getTablePosition().getRow()));
+                actualRateString.setRate(t.getNewValue());
             }
         }
         );
@@ -196,9 +197,10 @@ public class InterestFXMLController implements Initializable {
     
     @FXML
     private void addRate(ActionEvent event) {
-        if (inputRate.getText().length() > 1) {
-            InterestRate newRate = new InterestRate(inputRateDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")), inputRate.getText());
-            rates.add(newRate);
+        if ( Double.parseDouble(inputRate.getText()) > -1 && Double.parseDouble(inputRate.getText()) < 1) {
+            InterestRate newRate = new InterestRate(inputRateDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")), Double.parseDouble(inputRate.getText()));
+            InterestRateString newRateString = new InterestRateString(inputRateDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")), inputRate.getText());         
+            rates.add(newRateString);
             //partnerModel.addPartner(newPartner);
             clearInputRateFields();
         } else {

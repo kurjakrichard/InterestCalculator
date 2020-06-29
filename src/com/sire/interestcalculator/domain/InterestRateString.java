@@ -9,25 +9,25 @@ package com.sire.interestcalculator.domain;
  *
  * @author balza
  */
-public class InterestRate {
+public class InterestRateString {
 
     private int id;
     private String rateDate;
-    private double rate;
+    private String rate;
 
-    public InterestRate() {
+    public InterestRateString() {
         this.id = 0;
         this.rateDate = "";
-        this.rate = 0;
+        this.rate = "";
     }
 
-    public InterestRate(String rateDate, double rate) {
+    public InterestRateString(String rateDate, String rate) {
         this.id = 0;
         this.rateDate = rateDate;
         this.rate = rate;
     }
 
-    public InterestRate(int id, String rateDate, double rate) {
+    public InterestRateString(int id, String rateDate, String rate) {
         this.id = id;
         this.rateDate = rateDate;
         this.rate = rate;
@@ -49,11 +49,11 @@ public class InterestRate {
         this.rateDate = rateDate;
     }
 
-    public double getRate() {
+    public String getRate() {
         return rate;
     }
 
-    public void setRate(double rate) {
+    public void setRate(String rate) {
         this.rate = rate;
     }
 

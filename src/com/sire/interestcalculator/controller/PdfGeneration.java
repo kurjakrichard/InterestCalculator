@@ -18,6 +18,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.sire.interestcalculator.domain.InterestRate;
+import com.sire.interestcalculator.domain.InterestRateString;
 import java.io.FileOutputStream;
 import javafx.collections.ObservableList;
 
@@ -27,7 +28,7 @@ import javafx.collections.ObservableList;
  */
 public class PdfGeneration {
 
-    public void pdfGeneration(String filename, ObservableList<InterestRate> rates) {
+    public void pdfGeneration(String filename, ObservableList<InterestRateString> rates) {
         Document document = new Document();
         try {
             PdfWriter.getInstance(document, new FileOutputStream(filename + ".pdf"));
@@ -59,9 +60,9 @@ public class PdfGeneration {
 
             for (int i = 0; i < rates.size(); i++) {
                 table.addCell(String.valueOf(i + 1));
-                InterestRate actualRate = rates.get(i);
-                table.addCell(actualRate.getRateDate());
-                table.addCell(actualRate.getRate());
+                InterestRateString actualRateString = rates.get(i);
+                table.addCell(actualRateString.getRateDate());
+                table.addCell(actualRateString.getRate());
             }
             document.add(table);
             

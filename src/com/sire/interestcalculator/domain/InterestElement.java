@@ -17,9 +17,9 @@ public class InterestElement {
     private ArrayList<InterestRate> interestRates;
     private LocalDate actualDate;
     private LocalDate paymentDate;
-    private long amount;
+    private double amount;
 
-    public InterestElement(ArrayList<InterestRate> interestRates, LocalDate actualDate, LocalDate paymentDate, long amount) {
+    public InterestElement(ArrayList<InterestRate> interestRates, LocalDate actualDate, LocalDate paymentDate, double amount) {
         this.interestRates = interestRates;
         this.actualDate = actualDate;
         this.paymentDate = paymentDate;
@@ -52,11 +52,11 @@ public class InterestElement {
         this.paymentDate = paymentDate;
     }
 
-    public long getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(long amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
     
