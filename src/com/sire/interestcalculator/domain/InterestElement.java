@@ -19,14 +19,11 @@ public class InterestElement {
     private LocalDate paymentDate;
     private double amount;
 
-    public InterestElement(ArrayList<InterestRate> interestRates, LocalDate actualDate, LocalDate paymentDate, double amount) {
-        this.interestRates = interestRates;
+    public InterestElement(LocalDate actualDate, LocalDate paymentDate, double amount) {
         this.actualDate = actualDate;
         this.paymentDate = paymentDate;
         this.amount = amount;
     }
-    
-    
 
     public ArrayList<InterestRate> getInterestRates() {
         return interestRates;

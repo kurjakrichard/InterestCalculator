@@ -124,7 +124,7 @@ public class InterestModel {
                 System.out.println(e.getMessage());
             }
         } else {
-            System.out.println("Hiba történt az adat felvitelekor!");
+            System.out.println("Hiba történt az adat módosításakor!");
         }
     }
 

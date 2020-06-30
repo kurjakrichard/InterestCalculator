@@ -8,7 +8,6 @@ package com.sire.interestcalculator.controller;
 import com.sire.interestcalculator.domain.InterestRate;
 import com.sire.interestcalculator.domain.InterestRateString;
 import com.sire.interestcalculator.model.InterestModel;
-import com.sun.jdi.DoubleValue;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
@@ -52,8 +51,6 @@ public class InterestFXMLController implements Initializable {
     private StackPane menuPane;
     @FXML
     private Pane calculatorPane;
-    @FXML
-    private TextField inputPhoneNumber1;
     @FXML
     private Pane ratePane;
     @FXML
@@ -126,6 +123,7 @@ public class InterestFXMLController implements Initializable {
         rateCol.setMinWidth(50);
         rateCol.setCellFactory(TextFieldTableCell.forTableColumn());
         rateCol.setCellValueFactory(new PropertyValueFactory<>("rate"));
+        rateCol.setStyle("-fx-alignment: CENTER-RIGHT;");
 
         rateCol.setOnEditCommit(
                 new EventHandler<TableColumn.CellEditEvent<InterestRateString, String>>() {
@@ -204,7 +202,7 @@ public class InterestFXMLController implements Initializable {
 
     @FXML
     private void addRate(ActionEvent event) {
-        if (Double.parseDouble(inputRate.getText()) > -1 && Double.parseDouble(inputRate.getText()) < 1) {
+        if (Double.parseDouble(inputRate.getText()) > 0 && Double.parseDouble(inputRate.getText()) < 100) {
             InterestRate newRate = new InterestRate(inputRateDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")), Double.parseDouble(inputRate.getText()));
             InterestRateString newRateString = new InterestRateString(inputRateDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")), inputRate.getText());
             rates.add(newRateString);

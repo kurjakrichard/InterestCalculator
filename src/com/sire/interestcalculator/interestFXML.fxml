@@ -115,7 +115,7 @@
                                                 <VBox alignment="CENTER" prefHeight="170.0" prefWidth="257.0" spacing="10.0">
                                                     <children>
                                                         <DatePicker id="inputRateDate" fx:id="inputRateDate" prefHeight="26.0" prefWidth="252.0" promptText="ÉÉÉÉ.HH.NN" />
-                                                        <TextField id="inputRate" fx:id="inputRate" promptText="+3613584556" />
+                                                        <TextField id="inputRate" fx:id="inputRate" alignment="CENTER_RIGHT" promptText="0.00" />
                                                     </children>
                                                 </VBox>
                                                 <VBox alignment="CENTER" prefHeight="170.0" prefWidth="123.0" spacing="10.0">
