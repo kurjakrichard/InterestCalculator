@@ -8,6 +8,7 @@ package com.sire.interestcalculator.controller;
 import com.sire.interestcalculator.domain.InterestRate;
 import com.sire.interestcalculator.domain.InterestRateString;
 import com.sire.interestcalculator.model.InterestModel;
+import com.sun.jdi.DoubleValue;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
@@ -115,6 +116,8 @@ public class InterestFXMLController implements Initializable {
             public void handle(TableColumn.CellEditEvent<InterestRateString, String> t) {
                 InterestRateString actualRateString = ((InterestRateString) t.getTableView().getItems().get(t.getTablePosition().getRow()));
                 actualRateString.setRateDate(t.getNewValue());
+                InterestRate actualRate = new InterestRate(actualRateString.getId(), actualRateString.getRateDate(), Double.parseDouble(actualRateString.getRate()));
+                interestModel.updateRate(actualRate);
             }
         }
         );
@@ -130,6 +133,8 @@ public class InterestFXMLController implements Initializable {
             public void handle(TableColumn.CellEditEvent<InterestRateString, String> t) {
                 InterestRateString actualRateString = ((InterestRateString) t.getTableView().getItems().get(t.getTablePosition().getRow()));
                 actualRateString.setRate(t.getNewValue());
+                InterestRate actualRate = new InterestRate(actualRateString.getId(), actualRateString.getRateDate(), Double.parseDouble(actualRateString.getRate()));
+                interestModel.updateRate(actualRate);
             }
         }
         );

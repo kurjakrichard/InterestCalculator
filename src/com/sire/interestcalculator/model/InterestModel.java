@@ -71,9 +71,10 @@ public class InterestModel {
 
     /**
      * select all rows in the rates table
+     * @return 
      */
     public ArrayList<InterestRateString> selectAll() {
-        String sql = "SELECT * FROM rates";
+        String sql = "SELECT * FROM rates ORDER BY rateDate";
         ArrayList<InterestRateString> rates = new ArrayList<>();
         try (Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
