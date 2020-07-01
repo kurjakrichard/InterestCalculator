@@ -5,6 +5,8 @@
  */
 package com.sire.interestcalculator.domain;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author balza
@@ -12,22 +14,22 @@ package com.sire.interestcalculator.domain;
 public class InterestRate {
 
     private int id;
-    private String rateDate;
+    private LocalDate rateDate;
     private double rate;
 
     public InterestRate() {
         this.id = 0;
-        this.rateDate = "";
+        this.rateDate = null;
         this.rate = 0;
     }
 
-    public InterestRate(String rateDate, double rate) {
+    public InterestRate(LocalDate rateDate, double rate) {
         this.id = 0;
         this.rateDate = rateDate;
         this.rate = rate;
     }
 
-    public InterestRate(int id, String rateDate, double rate) {
+    public InterestRate(int id, LocalDate rateDate, double rate) {
         this.id = id;
         this.rateDate = rateDate;
         this.rate = rate;
@@ -41,11 +43,11 @@ public class InterestRate {
         this.id = id;
     }
 
-    public String getRateDate() {
+    public LocalDate getRateDate() {
         return rateDate;
     }
 
-    public void setRateDate(String rateDate) {
+    public void setRateDate(LocalDate rateDate) {
         this.rateDate = rateDate;
     }
 

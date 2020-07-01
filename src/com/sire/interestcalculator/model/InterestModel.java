@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 //</editor-fold>
 
@@ -101,7 +102,7 @@ public class InterestModel {
         String sql = "INSERT INTO rates(rateDate, rate) VALUES(?,?)";
         if (conn != null) {
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setString(1, rate.getRateDate());
+                pstmt.setString(1, rate.getRateDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")));
                 pstmt.setDouble(2, rate.getRate());
                 pstmt.executeUpdate();
             } catch (SQLException e) {
@@ -116,7 +117,7 @@ public class InterestModel {
         String sql = "UPDATE rates SET rateDate = ?, rate = ? WHERE id = ?";
         if (conn != null) {
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setString(1, rate.getRateDate());
+                pstmt.setString(1, rate.getRateDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")));
                 pstmt.setDouble(2, rate.getRate());
                 pstmt.setInt(3, rate.getId());
                 pstmt.executeUpdate();

@@ -9,6 +9,7 @@ import com.sire.interestcalculator.domain.InterestRate;
 import com.sire.interestcalculator.domain.InterestRateString;
 import com.sire.interestcalculator.model.InterestModel;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -112,7 +113,7 @@ public class InterestFXMLController implements Initializable {
             public void handle(TableColumn.CellEditEvent<InterestRateString, String> t) {
                 InterestRateString actualRateString = ((InterestRateString) t.getTableView().getItems().get(t.getTablePosition().getRow()));
                 actualRateString.setRateDate(t.getNewValue());
-                InterestRate actualRate = new InterestRate(actualRateString.getId(), actualRateString.getRateDate(), Double.parseDouble(actualRateString.getRate()));
+                InterestRate actualRate = new InterestRate(actualRateString.getId(), LocalDate.parse(actualRateString.getRateDate()), Double.parseDouble(actualRateString.getRate()));
                 interestModel.updateRate(actualRate);
             }
         }
@@ -130,7 +131,7 @@ public class InterestFXMLController implements Initializable {
             public void handle(TableColumn.CellEditEvent<InterestRateString, String> t) {
                 InterestRateString actualRateString = ((InterestRateString) t.getTableView().getItems().get(t.getTablePosition().getRow()));
                 actualRateString.setRate(t.getNewValue());
-                InterestRate actualRate = new InterestRate(actualRateString.getId(), actualRateString.getRateDate(), Double.parseDouble(actualRateString.getRate()));
+                InterestRate actualRate = new InterestRate(actualRateString.getId(), LocalDate.parse(actualRateString.getRateDate()), Double.parseDouble(actualRateString.getRate()));
                 interestModel.updateRate(actualRate);
             }
         }
@@ -212,9 +213,9 @@ public class InterestFXMLController implements Initializable {
     private void addRate(ActionEvent event) {
         try {
             Double.parseDouble(inputRate.getText());
-            
+            LocalDate actualDate = inputRateDate.getValue();
             if (Double.parseDouble(inputRate.getText()) > 0 && Double.parseDouble(inputRate.getText()) < 100) {
-                InterestRate newRate = new InterestRate(inputRateDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")), Double.parseDouble(inputRate.getText()));
+                InterestRate newRate = new InterestRate(actualDate, Double.parseDouble(inputRate.getText()));
                 InterestRateString newRateString = new InterestRateString(inputRateDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")), inputRate.getText());
                 rates.add(newRateString);
                 interestModel.addRate(newRate);
@@ -228,7 +229,7 @@ public class InterestFXMLController implements Initializable {
             }
 
         } catch (Exception e) {
-            alert("A dátum vagy a kamatkulcs nem maradhat üresen!");
+            alert("A dátum vagy a kamat nem maradhat üresen!");
             clearInputRateFields();
             inputRateDate.setValue(null);
         }
