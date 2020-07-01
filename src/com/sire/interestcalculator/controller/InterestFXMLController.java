@@ -98,7 +98,6 @@ public class InterestFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         setTableData();
         setMenuData();
-
     }
 
     private void setTableData() {
@@ -200,17 +199,40 @@ public class InterestFXMLController implements Initializable {
         exportPane.setVisible(exportPaneVisible);
     }
 
+    private void alert(String text) {
+        mainSplit.setDisable(true);
+        mainSplit.setOpacity(0.4);
+        alertBox.setVisible(true);
+        alertBox.setDisable(false);
+        alertText.setText(text);
+
+    }
+
     @FXML
     private void addRate(ActionEvent event) {
-        if (Double.parseDouble(inputRate.getText()) > 0 && Double.parseDouble(inputRate.getText()) < 100) {
-            InterestRate newRate = new InterestRate(inputRateDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")), Double.parseDouble(inputRate.getText()));
-            InterestRateString newRateString = new InterestRateString(inputRateDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")), inputRate.getText());
-            rates.add(newRateString);
-            interestModel.addRate(newRate);
+        try {
+            Double.parseDouble(inputRate.getText());
+            
+            if (Double.parseDouble(inputRate.getText()) > 0 && Double.parseDouble(inputRate.getText()) < 100) {
+                InterestRate newRate = new InterestRate(inputRateDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")), Double.parseDouble(inputRate.getText()));
+                InterestRateString newRateString = new InterestRateString(inputRateDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")), inputRate.getText());
+                rates.add(newRateString);
+                interestModel.addRate(newRate);
+                clearInputRateFields();
+                inputRateDate.setValue(null);
+            } else {
+                alert("A kamatkulcsnak 0 és 100 közé kell esnie!");
+                clearInputRateFields();
+                inputRateDate.setValue(null);
+
+            }
+
+        } catch (Exception e) {
+            alert("A dátum vagy a kamatkulcs nem maradhat üresen!");
             clearInputRateFields();
-        } else {
-            //alert("Adj meg egy partnernevet!");
+            inputRateDate.setValue(null);
         }
+
     }
 
     @FXML
@@ -222,12 +244,15 @@ public class InterestFXMLController implements Initializable {
             pdfCreator.pdfGeneration(fileName, rates);
             inputFilename.clear();
         } else {
-            //alert("Adj meg egy fájlnevet!");
+            alert("Adj meg egy fájlnevet!");
         }
     }
 
     @FXML
     private void alertButton(ActionEvent event) {
+        mainSplit.setDisable(false);
+        mainSplit.setOpacity(1);
+        alertBox.setVisible(false);
     }
 
     @FXML
