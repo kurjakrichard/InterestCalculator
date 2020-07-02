@@ -13,34 +13,17 @@ import java.time.LocalDate;
  */
 public class InterestRate {
 
-    private int id;
     private LocalDate rateDate;
     private double rate;
 
     public InterestRate() {
-        this.id = 0;
         this.rateDate = null;
         this.rate = 0;
     }
 
     public InterestRate(LocalDate rateDate, double rate) {
-        this.id = 0;
         this.rateDate = rateDate;
         this.rate = rate;
-    }
-
-    public InterestRate(int id, LocalDate rateDate, double rate) {
-        this.id = id;
-        this.rateDate = rateDate;
-        this.rate = rate;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public LocalDate getRateDate() {

@@ -113,8 +113,7 @@ public class InterestFXMLController implements Initializable {
             public void handle(TableColumn.CellEditEvent<InterestRateString, String> t) {
                 InterestRateString actualRateString = ((InterestRateString) t.getTableView().getItems().get(t.getTablePosition().getRow()));
                 actualRateString.setRateDate(t.getNewValue());
-                InterestRate actualRate = new InterestRate(actualRateString.getId(), LocalDate.parse(actualRateString.getRateDate()), Double.parseDouble(actualRateString.getRate()));
-                interestModel.updateRate(actualRate);
+                interestModel.updateRate(actualRateString);
             }
         }
         );
@@ -131,8 +130,7 @@ public class InterestFXMLController implements Initializable {
             public void handle(TableColumn.CellEditEvent<InterestRateString, String> t) {
                 InterestRateString actualRateString = ((InterestRateString) t.getTableView().getItems().get(t.getTablePosition().getRow()));
                 actualRateString.setRate(t.getNewValue());
-                InterestRate actualRate = new InterestRate(actualRateString.getId(), LocalDate.parse(actualRateString.getRateDate()), Double.parseDouble(actualRateString.getRate()));
-                interestModel.updateRate(actualRate);
+                interestModel.updateRate(actualRateString);
             }
         }
         );
@@ -215,25 +213,19 @@ public class InterestFXMLController implements Initializable {
             Double.parseDouble(inputRate.getText());
             LocalDate actualDate = inputRateDate.getValue();
             if (Double.parseDouble(inputRate.getText()) > 0 && Double.parseDouble(inputRate.getText()) < 100) {
-                InterestRate newRate = new InterestRate(actualDate, Double.parseDouble(inputRate.getText()));
                 InterestRateString newRateString = new InterestRateString(inputRateDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")), inputRate.getText());
                 rates.add(newRateString);
-                interestModel.addRate(newRate);
+                interestModel.addRate(newRateString);
                 clearInputRateFields();
-                inputRateDate.setValue(null);
             } else {
                 alert("A kamatkulcsnak 0 és 100 közé kell esnie!");
                 clearInputRateFields();
-                inputRateDate.setValue(null);
-
             }
 
         } catch (Exception e) {
-            alert("A dátum vagy a kamat nem maradhat üresen!");
+            alert("A dátumot és a kamatot helyesen add meg!");
             clearInputRateFields();
-            inputRateDate.setValue(null);
         }
-
     }
 
     @FXML
@@ -263,6 +255,6 @@ public class InterestFXMLController implements Initializable {
     private void clearInputRateFields() {
         inputRateDate.getEditor().clear();
         inputRate.clear();
+        inputRateDate.setValue(null);
     }
-
 }

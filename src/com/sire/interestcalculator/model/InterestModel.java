@@ -72,7 +72,8 @@ public class InterestModel {
 
     /**
      * select all rows in the rates table
-     * @return 
+     *
+     * @return
      */
     public ArrayList<InterestRateString> selectAll() {
         String sql = "SELECT * FROM rates ORDER BY rateDate";
@@ -94,16 +95,16 @@ public class InterestModel {
     }
 
     /**
-     * Insert a new row into the warehouses table
+     * Insert a new row into the rates table
      *
      * @param partner
      */
-    public void addRate(InterestRate rate) {
+    public void addRate(InterestRateString rate) {
         String sql = "INSERT INTO rates(rateDate, rate) VALUES(?,?)";
         if (conn != null) {
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setString(1, rate.getRateDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")));
-                pstmt.setDouble(2, rate.getRate());
+                pstmt.setString(1, rate.getRateDate());
+                pstmt.setDouble(2, Double.parseDouble(rate.getRate()));
                 pstmt.executeUpdate();
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -112,13 +113,17 @@ public class InterestModel {
             System.out.println("Hiba történt az adat felvitelekor!");
         }
     }
-
-    public void updateRate(InterestRate rate) {
+    
+    /**
+     * Update field in the rates table
+     * @param rate 
+     */
+    public void updateRate(InterestRateString rate) {
         String sql = "UPDATE rates SET rateDate = ?, rate = ? WHERE id = ?";
         if (conn != null) {
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setString(1, rate.getRateDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")));
-                pstmt.setDouble(2, rate.getRate());
+                pstmt.setString(1, rate.getRateDate());
+                pstmt.setDouble(2, Double.parseDouble(rate.getRate()));
                 pstmt.setInt(3, rate.getId());
                 pstmt.executeUpdate();
             } catch (SQLException e) {
