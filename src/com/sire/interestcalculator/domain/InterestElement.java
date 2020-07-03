@@ -6,6 +6,7 @@
 package com.sire.interestcalculator.domain;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 /**
@@ -13,49 +14,79 @@ import java.util.ArrayList;
  * @author balza
  */
 public class InterestElement {
-    
-    private ArrayList<InterestRate> interestRates;
-    private LocalDate actualDate;
-    private LocalDate paymentDate;
-    private double amount;
 
-    public InterestElement(LocalDate actualDate, LocalDate paymentDate, double amount) {
-        this.actualDate = actualDate;
-        this.paymentDate = paymentDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private long days;
+    private double rate;
+    private long amount;
+    private double interest;
+
+    public InterestElement() {
+    }
+    
+    
+
+    public InterestElement(LocalDate startDate, LocalDate endDate, double rate, long amount) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.rate = rate;
         this.amount = amount;
     }
 
-    public ArrayList<InterestRate> getInterestRates() {
-        return interestRates;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setInterestRates(ArrayList<InterestRate> interestRates) {
-        this.interestRates = interestRates;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
-    public LocalDate getActualDate() {
-        return actualDate;
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
-    public void setActualDate(LocalDate actualDate) {
-        this.actualDate = actualDate;
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
-    public LocalDate getPaymentDate() {
-        return paymentDate;
+    public long getDays() {
+        return days;
     }
 
-    public void setPaymentDate(LocalDate paymentDate) {
-        this.paymentDate = paymentDate;
+    public void setDays(long days) {
+        this.days = days;
     }
 
-    public double getAmount() {
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
+    }
+
+    public long getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(long amount) {
         this.amount = amount;
     }
+
+    public double getInterest() {
+        return interest;
+    }
+
+    public void setInterest(double interest) {
+        this.interest = interest;
+    }
     
-    
+    public double interest() {
+        long days = ChronoUnit.DAYS.between(startDate, endDate);
+        interest = amount * rate / 100 * days/startDate.lengthOfYear();
+
+        return interest;
+    }
+
 }

@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 //</editor-fold>
@@ -75,7 +76,7 @@ public class InterestModel {
      *
      * @return
      */
-    public ArrayList<InterestRateString> selectAll() {
+    public ArrayList<InterestRateString> selectAllString() {
         String sql = "SELECT * FROM rates ORDER BY rateDate";
         ArrayList<InterestRateString> rates = new ArrayList<>();
         try (Statement stmt = conn.createStatement();
@@ -88,6 +89,35 @@ public class InterestModel {
                 //       + rs.getString("companyName") + "\t"
                 //     + rs.getString("phoneNumber"));
             }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return rates;
+    }
+
+    /**
+     * select all rows in the rates table
+     *
+     * @return
+     */
+    public ArrayList<InterestRate> selectInterestPeriod(String dueDate, String paymentDate) {
+        String sql = "select rateDate,rate from rates where (rateDate = (SELECT max(rateDate) FROM rates where rateDate <= ?) OR (rateDate > ? AND rateDate < ?)) ORDER BY rateDate ASC";
+        ArrayList<InterestRate> rates = new ArrayList<>();
+        try (PreparedStatement pstmt = conn.prepareStatement(sql);
+                ) {
+            pstmt.setString(1, dueDate);
+            pstmt.setString(2, dueDate);
+            pstmt.setString(3, paymentDate);
+            ResultSet rs = pstmt.executeQuery();
+            
+            // loop through the result set
+            while (rs.next()) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+                LocalDate rateDate = LocalDate.parse(rs.getString("rateDate"), formatter);
+                InterestRate actualRate = new InterestRate(rateDate, rs.getDouble("rate"));
+                System.out.println(actualRate.getRateDate() + ", " + actualRate.getRate());
+                rates.add(actualRate);
+                }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -113,10 +143,11 @@ public class InterestModel {
             System.out.println("Hiba történt az adat felvitelekor!");
         }
     }
-    
+
     /**
      * Update field in the rates table
-     * @param rate 
+     *
+     * @param rate
      */
     public void updateRate(InterestRateString rate) {
         String sql = "UPDATE rates SET rateDate = ?, rate = ? WHERE id = ?";
