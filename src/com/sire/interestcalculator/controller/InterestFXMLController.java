@@ -5,12 +5,15 @@
  */
 package com.sire.interestcalculator.controller;
 
+import com.sire.interestcalculator.domain.InterestElement;
 import com.sire.interestcalculator.domain.InterestRate;
 import com.sire.interestcalculator.domain.InterestRateString;
 import com.sire.interestcalculator.model.InterestModel;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -75,6 +78,12 @@ public class InterestFXMLController implements Initializable {
     @FXML
     private Pane exportPane;
     @FXML
+    private DatePicker inputDueDate;
+    @FXML
+    private DatePicker inputPaymentDate;
+    @FXML
+    private TextField inputAmount;
+    @FXML
     private Button calculation;
 //</editor-fold>
 
@@ -136,7 +145,7 @@ public class InterestFXMLController implements Initializable {
         );
 
         rateTable.getColumns().addAll(rateDateCol, rateCol);
-        rates.addAll(interestModel.selectAll());
+        rates.addAll(interestModel.selectAllString());
         rateTable.setItems(rates);
     }
 
@@ -250,10 +259,48 @@ public class InterestFXMLController implements Initializable {
 
     @FXML
     private void calculation(ActionEvent event) {
-        LocalDate startDate = 
-        InterestRate actualrate = new InterestRate();
-        
-        
+        String dueDate = inputDueDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+        String paymentDate = inputPaymentDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+        Long amount = Long.parseLong(inputAmount.getText());
+        ArrayList<InterestElement> interestList = new ArrayList<>();
+        Long sumOfTheDays = 0L;
+        double sumOfTheInterest = 0;
+
+        try {
+            ArrayList<InterestRate> rateList = interestModel.selectInterestPeriod(dueDate, paymentDate);
+            rateList.add(new InterestRate(inputPaymentDate.getValue().plusDays(1), 0));
+            System.out.println(rateList.size());
+            LocalDate previousDate;
+            Double lastRate = rateList.get(rateList.size() - 1).getRate();
+
+            if (rateList.size() == 1) {
+                InterestElement element = new InterestElement(inputDueDate.getValue(), inputPaymentDate.getValue(), rateList.get(0).getRate(), amount);
+                element.interest();
+                element.setDays(ChronoUnit.DAYS.between(element.getStartDate(), element.getEndDate()));
+                interestList.add(element);
+                sumOfTheDays = element.getDays();
+                sumOfTheInterest = element.getInterest();
+                System.out.println("" + element.getStartDate() + " " + element.getEndDate().minusDays(1) + " " + element.getRate() + " " + element.getDays() + " " + element.getInterest());
+            } else {
+                previousDate = inputDueDate.getValue();
+                InterestElement element = new InterestElement();
+                for (int i = 0; i < rateList.size() - 1; i++) {
+                    element = new InterestElement(previousDate, rateList.get(i + 1).getRateDate(), rateList.get(i).getRate(), amount);
+                    element.interest();
+                    element.setDays(ChronoUnit.DAYS.between(element.getStartDate(), element.getEndDate()));
+                    interestList.add(element);
+                    System.out.println("" + element.getStartDate() + " " + element.getEndDate().minusDays(1) + " " + element.getRate() + " " + element.getDays() + " " + element.getInterest());
+                    previousDate = rateList.get(i + 1).getRateDate();
+                    sumOfTheDays += element.getDays();
+                    sumOfTheInterest += element.getInterest();
+
+                }
+            }
+
+        } catch (Exception e) {
+            alert("Kérlek adj meg minden adatot!");
+        }
+        System.out.println(sumOfTheDays + " " + sumOfTheInterest);
     }
 
     private void clearInputRateFields() {
