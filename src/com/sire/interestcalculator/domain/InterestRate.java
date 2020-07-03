@@ -6,6 +6,7 @@
 package com.sire.interestcalculator.domain;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 /**
  *
@@ -13,25 +14,35 @@ import java.time.LocalDate;
  */
 public class InterestRate {
 
-    private LocalDate rateDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private double rate;
+    private int amount;
 
     public InterestRate() {
-        this.rateDate = null;
-        this.rate = 0;
     }
 
-    public InterestRate(LocalDate rateDate, double rate) {
-        this.rateDate = rateDate;
+    public InterestRate(LocalDate startDate, LocalDate endDate, double rate, int amount) {
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.rate = rate;
+        this.amount = amount;
+    }  
+
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public LocalDate getRateDate() {
-        return rateDate;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
-    public void setRateDate(LocalDate rateDate) {
-        this.rateDate = rateDate;
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
     public double getRate() {
@@ -42,4 +53,19 @@ public class InterestRate {
         this.rate = rate;
     }
 
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+    
+    public double interest(LocalDate startDate, LocalDate endDate, double rate, int amount){
+        rate = 10;
+        long days = ChronoUnit.DAYS.between(endDate, startDate);
+        double interest = amount * rate/100 * days;
+                
+        return interest;
+    }
 }

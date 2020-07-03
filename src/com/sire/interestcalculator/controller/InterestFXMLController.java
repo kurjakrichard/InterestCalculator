@@ -250,6 +250,10 @@ public class InterestFXMLController implements Initializable {
 
     @FXML
     private void calculation(ActionEvent event) {
+        LocalDate startDate = 
+        InterestRate actualrate = new InterestRate();
+        
+        
     }
 
     private void clearInputRateFields() {
