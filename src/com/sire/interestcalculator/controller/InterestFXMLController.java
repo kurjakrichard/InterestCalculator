@@ -165,6 +165,7 @@ public class InterestFXMLController implements Initializable {
         TreeItem<String> nodeItemA3 = new TreeItem<>(MENU_EXPORT);
 
         nodeItemA.getChildren().addAll(nodeItemA1, nodeItemA2, nodeItemA3);
+        //nodeItemA.getChildren().addAll(nodeItemA1, nodeItemA2);
         treeItemRoot1.getChildren().addAll(nodeItemA, nodeItemB);
         menuPane.getChildren().add(treeView);
 
@@ -259,14 +260,16 @@ public class InterestFXMLController implements Initializable {
 
     @FXML
     private void calculation(ActionEvent event) {
-        String dueDate = inputDueDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
-        String paymentDate = inputPaymentDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
-        Long amount = Long.parseLong(inputAmount.getText());
-        ArrayList<InterestElement> interestList = new ArrayList<>();
+
         Long sumOfTheDays = 0L;
         double sumOfTheInterest = 0;
 
         try {
+            String dueDate = inputDueDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+            String paymentDate = inputPaymentDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+            Long amount = Long.parseLong(inputAmount.getText());
+            ArrayList<InterestElement> interestList = new ArrayList<>();
+
             ArrayList<InterestRate> rateList = interestModel.selectInterestPeriod(dueDate, paymentDate);
             rateList.add(new InterestRate(inputPaymentDate.getValue().plusDays(1), 0));
             System.out.println(rateList.size());
