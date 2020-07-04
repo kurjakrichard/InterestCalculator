@@ -17,6 +17,7 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.sire.interestcalculator.domain.InterestElement;
 import com.sire.interestcalculator.domain.InterestRateString;
 import java.io.FileOutputStream;
 import javafx.collections.ObservableList;
@@ -27,7 +28,7 @@ import javafx.collections.ObservableList;
  */
 public class PdfGeneration {
 
-    public void pdfGeneration(String filename, ObservableList<InterestRateString> rates) {
+    public void pdfGenerationRate(String filename, ObservableList<InterestRateString> rates) {
         Document document = new Document();
         try {
             PdfWriter.getInstance(document, new FileOutputStream(filename + ".pdf"));
@@ -72,6 +73,10 @@ public class PdfGeneration {
             document.close();
         } catch (Exception e) {
         }
+    }
+
+    void pdfGeneraton(String fileName, ObservableList<InterestElement> interests) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

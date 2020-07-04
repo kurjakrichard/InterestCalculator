@@ -87,6 +87,8 @@ public class InterestFXMLController implements Initializable {
     private TextField inputAmount;
     @FXML
     private Button calculation;
+    @FXML
+    private Button exportRateList;
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="class-variables">
@@ -96,10 +98,11 @@ public class InterestFXMLController implements Initializable {
     private final String MENU_EXPORT = "Exportálás";
     private final String MENU_EXIT = "Kilépés";
     private InterestModel interestModel = new InterestModel();
+    private boolean decision;
 //</editor-fold>
 
     private final ObservableList<InterestRateString> rates = FXCollections.observableArrayList();
-
+    private final ObservableList<InterestElement> interests = FXCollections.observableArrayList();
     /**
      * Initializes the controller class.
      *
@@ -145,45 +148,38 @@ public class InterestFXMLController implements Initializable {
             }
         }
         );
-        
-        TableColumn removeCol = new TableColumn( "Törlés" );
+
+        TableColumn removeCol = new TableColumn("Törlés");
         removeCol.setMinWidth(60);
 
-        Callback<TableColumn<InterestRateString, String>, TableCell<InterestRateString, String>> cellFactory = 
-                new Callback<TableColumn<InterestRateString, String>, TableCell<InterestRateString, String>>()
-                {
-                    @Override
-                    public TableCell call( final TableColumn<InterestRateString, String> param )
-                    {
-                        final TableCell<InterestRateString, String> cell = new TableCell<InterestRateString, String>()
-                        {   
-                            final Button btn = new Button( "Törlés" );
+        Callback<TableColumn<InterestRateString, String>, TableCell<InterestRateString, String>> cellFactory
+                = new Callback<TableColumn<InterestRateString, String>, TableCell<InterestRateString, String>>() {
+            @Override
+            public TableCell call(final TableColumn<InterestRateString, String> param) {
+                final TableCell<InterestRateString, String> cell = new TableCell<InterestRateString, String>() {
+                    final Button btn = new Button("Törlés");
 
-                            @Override
-                            public void updateItem( String item, boolean empty )
-                            {
-                                super.updateItem( item, empty );
-                                if ( empty )
-                                {
-                                    setGraphic( null );
-                                    setText( null );
-                                }
-                                else
-                                {
-                                    btn.setOnAction( ( ActionEvent event ) ->
-                                            {
-                                                InterestRateString rate = getTableView().getItems().get( getIndex() );
-                                                rates.remove(rate);
-                                                interestModel.removeRate(rate);
-                                       } );
-                                    setGraphic( btn );
-                                    setText( null );
-                                }
-                            }
-                        };
-                        return cell;
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                            setText(null);
+                        } else {
+                            btn.setOnAction((ActionEvent event)
+                                    -> {
+                                InterestRateString rate = getTableView().getItems().get(getIndex());
+                                rates.remove(rate);
+                                interestModel.removeRate(rate);
+                            });
+                            setGraphic(btn);
+                            setText(null);
+                        }
                     }
                 };
+                return cell;
+            }
+        };
 
         removeCol.setCellFactory(cellFactory);
         rateTable.getColumns().addAll(rateDateCol, rateCol, removeCol);
@@ -207,7 +203,6 @@ public class InterestFXMLController implements Initializable {
         TreeItem<String> nodeItemA3 = new TreeItem<>(MENU_EXPORT);
 
         nodeItemA.getChildren().addAll(nodeItemA1, nodeItemA2, nodeItemA3);
-        //nodeItemA.getChildren().addAll(nodeItemA1, nodeItemA2);
         treeItemRoot1.getChildren().addAll(nodeItemA, nodeItemB);
         menuPane.getChildren().add(treeView);
 
@@ -286,7 +281,13 @@ public class InterestFXMLController implements Initializable {
         fileName = fileName.replaceAll("ˇ\\s+", "");
         if (fileName != null && !fileName.equals("")) {
             PdfGeneration pdfCreator = new PdfGeneration();
-            pdfCreator.pdfGeneration(fileName, rates);
+            if (decision) {
+                pdfCreator.pdfGenerationRate(fileName, rates);
+                setMenuVisible(false, true, false);
+            } else {
+                pdfCreator.pdfGeneraton(fileName, interests);
+                setMenuVisible(true, false, false);
+            }
             inputFilename.clear();
         } else {
             alert("Adj meg egy fájlnevet!");
@@ -302,22 +303,18 @@ public class InterestFXMLController implements Initializable {
 
     @FXML
     private void calculation(ActionEvent event) {
-
         Long sumOfTheDays = 0L;
         double sumOfTheInterest = 0;
-
         try {
             String dueDate = inputDueDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
             String paymentDate = inputPaymentDate.getValue().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
             Long amount = Long.parseLong(inputAmount.getText());
             ArrayList<InterestElement> interestList = new ArrayList<>();
-
             ArrayList<InterestRate> rateList = interestModel.selectInterestPeriod(dueDate, paymentDate);
             rateList.add(new InterestRate(inputPaymentDate.getValue().plusDays(1), 0));
             System.out.println(rateList.size());
             LocalDate previousDate;
             Double lastRate = rateList.get(rateList.size() - 1).getRate();
-
             if (rateList.size() == 1) {
                 InterestElement element = new InterestElement(inputDueDate.getValue(), inputPaymentDate.getValue(), rateList.get(0).getRate(), amount);
                 element.interest();
@@ -338,7 +335,6 @@ public class InterestFXMLController implements Initializable {
                     previousDate = rateList.get(i + 1).getRateDate();
                     sumOfTheDays += element.getDays();
                     sumOfTheInterest += element.getInterest();
-
                 }
             }
 
@@ -352,5 +348,11 @@ public class InterestFXMLController implements Initializable {
         inputRateDate.getEditor().clear();
         inputRate.clear();
         inputRateDate.setValue(null);
+    }
+
+    @FXML
+    private void exportRateList(ActionEvent event) {
+        setMenuVisible(false, false, true);
+        decision = true;
     }
 }
