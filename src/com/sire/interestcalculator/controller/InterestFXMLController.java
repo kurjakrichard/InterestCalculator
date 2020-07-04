@@ -28,6 +28,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -40,6 +41,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -143,8 +145,48 @@ public class InterestFXMLController implements Initializable {
             }
         }
         );
+        
+        TableColumn removeCol = new TableColumn( "Törlés" );
+        removeCol.setMinWidth(60);
 
-        rateTable.getColumns().addAll(rateDateCol, rateCol);
+        Callback<TableColumn<InterestRateString, String>, TableCell<InterestRateString, String>> cellFactory = 
+                new Callback<TableColumn<InterestRateString, String>, TableCell<InterestRateString, String>>()
+                {
+                    @Override
+                    public TableCell call( final TableColumn<InterestRateString, String> param )
+                    {
+                        final TableCell<InterestRateString, String> cell = new TableCell<InterestRateString, String>()
+                        {   
+                            final Button btn = new Button( "Törlés" );
+
+                            @Override
+                            public void updateItem( String item, boolean empty )
+                            {
+                                super.updateItem( item, empty );
+                                if ( empty )
+                                {
+                                    setGraphic( null );
+                                    setText( null );
+                                }
+                                else
+                                {
+                                    btn.setOnAction( ( ActionEvent event ) ->
+                                            {
+                                                InterestRateString rate = getTableView().getItems().get( getIndex() );
+                                                rates.remove(rate);
+                                                interestModel.removeRate(rate);
+                                       } );
+                                    setGraphic( btn );
+                                    setText( null );
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+
+        removeCol.setCellFactory(cellFactory);
+        rateTable.getColumns().addAll(rateDateCol, rateCol, removeCol);
         rates.addAll(interestModel.selectAllString());
         rateTable.setItems(rates);
     }

@@ -165,4 +165,23 @@ public class InterestModel {
         }
     }
 
+    /**
+     * Update field in the rates table
+     *
+     * @param rate
+     */
+    public void removeRate(InterestRateString rate) {
+        String sql = "DELETE FROM rates WHERE id = ?";
+        if (conn != null) {
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setInt(1, rate.getId());
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            System.out.println("Hiba történt az adat törlésekor!");
+        }
+    }
+    
 }
