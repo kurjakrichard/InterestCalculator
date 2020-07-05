@@ -14,17 +14,15 @@ public class InterestElementString {
     private String period;
     private String days;
     private String rate;
-    private String amount;
     private String interest;
 
     public InterestElementString() {
     }
 
-    public InterestElementString(String period, String days, String rate, String amount, String interest) {
+    public InterestElementString(String period, String days, String rate, String interest) {
         this.period = period;
         this.days = days;
         this.rate = rate;
-        this.amount = amount;
         this.interest = interest;
     }
 
@@ -52,21 +50,11 @@ public class InterestElementString {
         this.rate = rate;
     }
 
-    public String getAmount() {
-        return amount;
-    }
-
-    public void setAmount(String amount) {
-        this.amount = amount;
-    }
-
     public String getInterest() {
         return interest;
     }
 
     public void setInterest(String interest) {
         this.interest = interest;
-    }
-
-    
+    }   
 }

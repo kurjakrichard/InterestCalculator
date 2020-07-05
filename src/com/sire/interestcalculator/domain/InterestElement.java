@@ -5,7 +5,9 @@
  */
 package com.sire.interestcalculator.domain;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 /**
@@ -20,11 +22,10 @@ public class InterestElement {
     private double rate;
     private long amount;
     private double interest;
+    private InterestElementString elementString;
 
     public InterestElement() {
     }
-    
-    
 
     public InterestElement(LocalDate startDate, LocalDate endDate, double rate, long amount) {
         this.startDate = startDate;
@@ -80,12 +81,21 @@ public class InterestElement {
     public void setInterest(double interest) {
         this.interest = interest;
     }
-    
+
     public double interest() {
         long days = ChronoUnit.DAYS.between(startDate, endDate);
-        interest = amount * rate / 100 * days/startDate.lengthOfYear();
+        interest = amount * rate / 100 * days / startDate.lengthOfYear();
 
         return interest;
     }
 
+    public InterestElementString convertToString() {
+        String period = startDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd")) + " - " + endDate.minusDays(1).format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+        String days = String.valueOf(this.days);
+        DecimalFormat f = new DecimalFormat("0.00");
+        String rate = String.valueOf(f.format(this.rate))+"%";
+        String interest = String.valueOf(f.format(this.interest));
+        elementString = new InterestElementString(period, days, rate, interest);     
+        return elementString;
+    }
 }

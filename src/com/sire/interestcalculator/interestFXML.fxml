@@ -19,9 +19,9 @@
     <children>
         <SplitPane id="mainSplit" fx:id="mainSplit" dividerPositions="0.24571428571428572" layoutX="14.0" layoutY="42.0" prefHeight="490.0" prefWidth="630.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="489.0" prefWidth="159.0">
+                <AnchorPane maxWidth="-Infinity" minHeight="0.0" minWidth="177.6" prefHeight="489.0" prefWidth="177.6">
                     <children>
-                        <StackPane id="menuPane" fx:id="menuPane" prefHeight="356.8" prefWidth="177.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <StackPane id="menuPane" fx:id="menuPane" minWidth="177.6" prefHeight="356.8" prefWidth="177.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">

@@ -66,7 +66,7 @@ public class PdfGeneration {
             }
             document.add(table);
             
-            Chunk signature = new Chunk("\n\n Generálva a kamatkalkulátor alkalmazás segítségével.");
+            Chunk signature = new Chunk("\n\n Generálva a Kamatmágus alkalmazás segítségével.");
             Paragraph base = new Paragraph(signature);
             document.add(base);
 
@@ -75,8 +75,53 @@ public class PdfGeneration {
         }
     }
 
-    void pdfGeneraton(String fileName, ObservableList<InterestElementString> interests) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    void pdfGeneraton(String filename, ObservableList<InterestElementString> interests) {
+        Document document = new Document();
+        try {
+            PdfWriter.getInstance(document, new FileOutputStream(filename + ".pdf"));
+            document.open();
+            //logo
+            Image image1 = Image.getInstance(getClass().getResource("/logo.jpg"));
+            image1.scaleToFit(600, 275);
+            image1.setAbsolutePosition(35f, 550f);
+            document.add(image1);
+
+            document.add(new Paragraph("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", FontFactory.getFont("betutipus", BaseFont.IDENTITY_H, BaseFont.EMBEDDED)));
+            //Táblázat
+            float[] columnWidths = {5, 3, 3, 3};
+            PdfPTable table = new PdfPTable(columnWidths);
+            table.setWidthPercentage(100);
+            PdfPCell cell = new PdfPCell(new Phrase("Késedelmi kamat számítás"));
+            cell.setBackgroundColor(BaseColor.WHITE);
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setColspan(4);
+            table.addCell(cell);
+
+            table.getDefaultCell().setBackgroundColor(BaseColor.WHITE);
+            table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell("Periódus");
+            table.addCell("Eltelt napok száma");
+            table.addCell("Kamatmérték (%)");
+            table.addCell("Kamatérték");
+            
+            table.setHeaderRows(1);
+
+            for (int i = 0; i < interests.size(); i++) {
+                InterestElementString actualElementString = interests.get(i);
+                table.addCell(actualElementString.getPeriod());
+                table.addCell(actualElementString.getDays());
+                table.addCell(actualElementString.getRate());
+                table.addCell(actualElementString.getInterest());
+            }
+            document.add(table);
+            
+            Chunk signature = new Chunk("\n\n Generálva a Kamatmágus alkalmazás segítségével.");
+            Paragraph base = new Paragraph(signature);
+            document.add(base);
+
+            document.close();
+        } catch (Exception e) {
+        }
     }
 
 }

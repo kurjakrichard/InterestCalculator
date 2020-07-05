@@ -119,6 +119,7 @@ public class InterestFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         setRateTableData();
         setMenuData();
+        setInterestTableData();
     }
 
     private void setRateTableData() {
@@ -195,32 +196,29 @@ public class InterestFXMLController implements Initializable {
 
     private void setInterestTableData() {
         TableColumn periodCol = new TableColumn("Időszak");
-        periodCol.setMinWidth(50);
+        periodCol.setMinWidth(160);
         periodCol.setCellFactory(TextFieldTableCell.forTableColumn());
         periodCol.setCellValueFactory(new PropertyValueFactory<>("period"));
 
         TableColumn daysCol = new TableColumn("Eltelt napok száma");
-        daysCol.setMinWidth(50);
+        daysCol.setMinWidth(130);
         daysCol.setCellFactory(TextFieldTableCell.forTableColumn());
         daysCol.setCellValueFactory(new PropertyValueFactory<>("days"));
         daysCol.setStyle("-fx-alignment: CENTER-RIGHT;");
 
         TableColumn interestCol = new TableColumn("Kamatösszeg");
-        interestCol.setMinWidth(50);
+        interestCol.setMinWidth(100);
         interestCol.setCellFactory(TextFieldTableCell.forTableColumn());
         interestCol.setCellValueFactory(new PropertyValueFactory<>("interest"));
         interestCol.setStyle("-fx-alignment: CENTER-RIGHT;");
 
         TableColumn rateCol = new TableColumn("Kamatmérték");
-        rateCol.setMinWidth(50);
+        rateCol.setMinWidth(100);
         rateCol.setCellFactory(TextFieldTableCell.forTableColumn());
         rateCol.setCellValueFactory(new PropertyValueFactory<>("rate"));
         rateCol.setStyle("-fx-alignment: CENTER-RIGHT;");
 
         interestTable.getColumns().addAll(periodCol, daysCol, rateCol, interestCol);
-        interestStringList.add(new InterestElementString("2020.01.01", "0.5", "100.000", "50", "20"));
-        interests.addAll(interestStringList);
-        interestTable.setItems(interests);
     }
 
     private void setMenuData() {
@@ -337,6 +335,9 @@ public class InterestFXMLController implements Initializable {
 
     @FXML
     private void calculation(ActionEvent event) {
+        interests.clear();
+        interestStringList.clear();
+        interestTable.getItems().clear();
         Long sumOfTheDays = 0L;
         double sumOfTheInterest = 0;
         try {
@@ -354,10 +355,10 @@ public class InterestFXMLController implements Initializable {
                 interestList.add(element);
                 InterestElementString stringElement = new InterestElementString();
                 interestStringList.add(stringElement);
+                interests.add(element.convertToString());
                 sumOfTheDays = element.getDays();
                 sumOfTheInterest = element.getInterest();
-                System.out.println("" + element.getStartDate() + " " + element.getEndDate().minusDays(1) + " " + element.getRate() + " " + element.getDays() + " " + element.getInterest());
-            } else {
+             } else {
                 previousDate = inputDueDate.getValue();
                 InterestElement element = new InterestElement();
                 for (int i = 0; i < rateList.size() - 1; i++) {
@@ -365,17 +366,17 @@ public class InterestFXMLController implements Initializable {
                     element.interest();
                     element.setDays(ChronoUnit.DAYS.between(element.getStartDate(), element.getEndDate()));
                     interestList.add(element);
-                    System.out.println("" + element.getStartDate() + " " + element.getEndDate().minusDays(1) + " " + element.getRate() + " " + element.getDays() + " " + element.getInterest());
                     previousDate = rateList.get(i + 1).getRateDate();
+                    interests.add(element.convertToString());
                     sumOfTheDays += element.getDays();
                     sumOfTheInterest += element.getInterest();
                 }
+                interests.addAll(interestStringList);
+                interestTable.setItems(interests);
             }
-
         } catch (Exception e) {
             alert("Kérlek adj meg minden adatot!");
         }
-        setInterestTableData();
     }
 
     private void clearInputRateFields() {
