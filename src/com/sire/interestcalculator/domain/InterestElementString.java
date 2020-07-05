@@ -5,18 +5,13 @@
  */
 package com.sire.interestcalculator.domain;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-
 /**
  *
  * @author balza
  */
 public class InterestElementString {
 
-    private String startDate;
-    private String endDate;
+    private String period;
     private String days;
     private String rate;
     private String amount;
@@ -25,29 +20,20 @@ public class InterestElementString {
     public InterestElementString() {
     }
 
-    public InterestElementString(String startDate, String endDate, String days, String rate, String amount, String interest) {
-        this.startDate = startDate;
-        this.endDate = endDate;
+    public InterestElementString(String period, String days, String rate, String amount, String interest) {
+        this.period = period;
         this.days = days;
         this.rate = rate;
         this.amount = amount;
         this.interest = interest;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public String getPeriod() {
+        return period;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setPeriod(String period) {
+        this.period = period;
     }
 
     public String getDays() {
@@ -81,8 +67,6 @@ public class InterestElementString {
     public void setInterest(String interest) {
         this.interest = interest;
     }
-    
-    
 
-   
+    
 }

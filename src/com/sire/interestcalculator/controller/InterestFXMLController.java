@@ -194,15 +194,10 @@ public class InterestFXMLController implements Initializable {
     }
 
     private void setInterestTableData() {
-        TableColumn startDateCol = new TableColumn("Időszak kezdete");
-        startDateCol.setMinWidth(50);
-        startDateCol.setCellFactory(TextFieldTableCell.forTableColumn());
-        startDateCol.setCellValueFactory(new PropertyValueFactory<>("startDate"));
-
-        TableColumn endDateCol = new TableColumn("Időszak vége");
-        endDateCol.setMinWidth(50);
-        endDateCol.setCellFactory(TextFieldTableCell.forTableColumn());
-        endDateCol.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+        TableColumn periodCol = new TableColumn("Időszak");
+        periodCol.setMinWidth(50);
+        periodCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        periodCol.setCellValueFactory(new PropertyValueFactory<>("period"));
 
         TableColumn daysCol = new TableColumn("Eltelt napok száma");
         daysCol.setMinWidth(50);
@@ -222,8 +217,8 @@ public class InterestFXMLController implements Initializable {
         rateCol.setCellValueFactory(new PropertyValueFactory<>("rate"));
         rateCol.setStyle("-fx-alignment: CENTER-RIGHT;");
 
-        interestTable.getColumns().addAll(startDateCol, endDateCol, daysCol, rateCol, interestCol);
-        interestStringList.add(new InterestElementString("2020.01.01", "2020.02.12", "0.5", "100.000", "50", "20"));
+        interestTable.getColumns().addAll(periodCol, daysCol, rateCol, interestCol);
+        interestStringList.add(new InterestElementString("2020.01.01", "0.5", "100.000", "50", "20"));
         interests.addAll(interestStringList);
         interestTable.setItems(interests);
     }

@@ -40,7 +40,6 @@ public class InterestModel {
      * Create connection to the database
      */
     private void connect(String url) {
-
         try {
             conn = DriverManager.getConnection(url);
             System.out.println("Connection to SQLite has been established.");
@@ -166,7 +165,7 @@ public class InterestModel {
     }
 
     /**
-     * Update field in the rates table
+     * Remove field in the rates table
      *
      * @param rate
      */
