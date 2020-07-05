@@ -6,6 +6,7 @@
 package com.sire.interestcalculator.controller;
 
 import com.sire.interestcalculator.domain.InterestElement;
+import com.sire.interestcalculator.domain.InterestElementString;
 import com.sire.interestcalculator.domain.InterestRate;
 import com.sire.interestcalculator.domain.InterestRateString;
 import com.sire.interestcalculator.model.InterestModel;
@@ -78,6 +79,8 @@ public class InterestFXMLController implements Initializable {
     @FXML
     private TableView rateTable;
     @FXML
+    private TableView interestTable;
+    @FXML
     private Pane exportPane;
     @FXML
     private DatePicker inputDueDate;
@@ -89,20 +92,23 @@ public class InterestFXMLController implements Initializable {
     private Button calculation;
     @FXML
     private Button exportRateList;
+    @FXML
+    private Button exportInterests;
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="class-variables">
     private final String MENU_MAIN = "Kamat kalkulátor";
     private final String MENU_CALCULATOR = "Kamat számítás";
     private final String MENU_INTEREST = "Kamatok";
-    private final String MENU_EXPORT = "Exportálás";
     private final String MENU_EXIT = "Kilépés";
     private InterestModel interestModel = new InterestModel();
     private boolean decision;
+    ArrayList<InterestElementString> interestStringList = new ArrayList();
 //</editor-fold>
 
     private final ObservableList<InterestRateString> rates = FXCollections.observableArrayList();
-    private final ObservableList<InterestElement> interests = FXCollections.observableArrayList();
+    private final ObservableList<InterestElementString> interests = FXCollections.observableArrayList();
+
     /**
      * Initializes the controller class.
      *
@@ -111,11 +117,11 @@ public class InterestFXMLController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        setTableData();
+        setRateTableData();
         setMenuData();
     }
 
-    private void setTableData() {
+    private void setRateTableData() {
         TableColumn rateDateCol = new TableColumn("Dátum");
         rateDateCol.setMinWidth(50);
         rateDateCol.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -132,7 +138,7 @@ public class InterestFXMLController implements Initializable {
         }
         );
 
-        TableColumn rateCol = new TableColumn("Kamatkulcs");
+        TableColumn rateCol = new TableColumn("Kamatmérték (%)");
         rateCol.setMinWidth(50);
         rateCol.setCellFactory(TextFieldTableCell.forTableColumn());
         rateCol.setCellValueFactory(new PropertyValueFactory<>("rate"));
@@ -187,22 +193,58 @@ public class InterestFXMLController implements Initializable {
         rateTable.setItems(rates);
     }
 
+    private void setInterestTableData() {
+        TableColumn startDateCol = new TableColumn("Időszak kezdete");
+        startDateCol.setMinWidth(50);
+        startDateCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        startDateCol.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+
+        TableColumn endDateCol = new TableColumn("Időszak vége");
+        endDateCol.setMinWidth(50);
+        endDateCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        endDateCol.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+
+        TableColumn daysCol = new TableColumn("Eltelt napok száma");
+        daysCol.setMinWidth(50);
+        daysCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        daysCol.setCellValueFactory(new PropertyValueFactory<>("days"));
+        daysCol.setStyle("-fx-alignment: CENTER-RIGHT;");
+
+        TableColumn interestCol = new TableColumn("Kamatösszeg");
+        interestCol.setMinWidth(50);
+        interestCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        interestCol.setCellValueFactory(new PropertyValueFactory<>("interest"));
+        interestCol.setStyle("-fx-alignment: CENTER-RIGHT;");
+
+        TableColumn rateCol = new TableColumn("Kamatmérték");
+        rateCol.setMinWidth(50);
+        rateCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        rateCol.setCellValueFactory(new PropertyValueFactory<>("rate"));
+        rateCol.setStyle("-fx-alignment: CENTER-RIGHT;");
+
+        interestTable.getColumns().addAll(startDateCol, endDateCol, daysCol, rateCol, interestCol);
+        interestStringList.add(new InterestElementString("2020.01.01", "2020.02.12", "0.5", "100.000", "50", "20"));
+        interests.addAll(interestStringList);
+        interestTable.setItems(interests);
+    }
+
     private void setMenuData() {
         TreeItem<String> treeItemRoot1 = new TreeItem<>("Menü");
         TreeView<String> treeView = new TreeView<>(treeItemRoot1);
         treeView.setShowRoot(false);
 
         Node exitNode = new ImageView(new Image(getClass().getResourceAsStream("/Actions-application-exit-icon.png")));
+        Node calculatorNode = new ImageView(new Image(getClass().getResourceAsStream("/Actions-document-preview-archive-icon.png")));
+        Node rateNode = new ImageView(new Image(getClass().getResourceAsStream("/Actions-insert-table-icon.png")));
 
         TreeItem<String> nodeItemA = new TreeItem<>(MENU_MAIN);
         TreeItem<String> nodeItemB = new TreeItem<>(MENU_EXIT, exitNode);
         nodeItemA.setExpanded(true);
 
-        TreeItem<String> nodeItemA1 = new TreeItem<>(MENU_CALCULATOR);
-        TreeItem<String> nodeItemA2 = new TreeItem<>(MENU_INTEREST);
-        TreeItem<String> nodeItemA3 = new TreeItem<>(MENU_EXPORT);
+        TreeItem<String> nodeItemA1 = new TreeItem<>(MENU_CALCULATOR, calculatorNode);
+        TreeItem<String> nodeItemA2 = new TreeItem<>(MENU_INTEREST, rateNode);
 
-        nodeItemA.getChildren().addAll(nodeItemA1, nodeItemA2, nodeItemA3);
+        nodeItemA.getChildren().addAll(nodeItemA1, nodeItemA2);
         treeItemRoot1.getChildren().addAll(nodeItemA, nodeItemB);
         menuPane.getChildren().add(treeView);
 
@@ -225,9 +267,6 @@ public class InterestFXMLController implements Initializable {
                             break;
                         case MENU_INTEREST:
                             setMenuVisible(false, true, false);
-                            break;
-                        case MENU_EXPORT:
-                            setMenuVisible(false, false, true);
                             break;
                         case MENU_EXIT:
                             System.exit(0);
@@ -312,14 +351,14 @@ public class InterestFXMLController implements Initializable {
             ArrayList<InterestElement> interestList = new ArrayList<>();
             ArrayList<InterestRate> rateList = interestModel.selectInterestPeriod(dueDate, paymentDate);
             rateList.add(new InterestRate(inputPaymentDate.getValue().plusDays(1), 0));
-            System.out.println(rateList.size());
             LocalDate previousDate;
-            Double lastRate = rateList.get(rateList.size() - 1).getRate();
             if (rateList.size() == 1) {
                 InterestElement element = new InterestElement(inputDueDate.getValue(), inputPaymentDate.getValue(), rateList.get(0).getRate(), amount);
                 element.interest();
                 element.setDays(ChronoUnit.DAYS.between(element.getStartDate(), element.getEndDate()));
                 interestList.add(element);
+                InterestElementString stringElement = new InterestElementString();
+                interestStringList.add(stringElement);
                 sumOfTheDays = element.getDays();
                 sumOfTheInterest = element.getInterest();
                 System.out.println("" + element.getStartDate() + " " + element.getEndDate().minusDays(1) + " " + element.getRate() + " " + element.getDays() + " " + element.getInterest());
@@ -341,7 +380,7 @@ public class InterestFXMLController implements Initializable {
         } catch (Exception e) {
             alert("Kérlek adj meg minden adatot!");
         }
-        System.out.println(sumOfTheDays + " " + sumOfTheInterest);
+        setInterestTableData();
     }
 
     private void clearInputRateFields() {
@@ -354,5 +393,11 @@ public class InterestFXMLController implements Initializable {
     private void exportRateList(ActionEvent event) {
         setMenuVisible(false, false, true);
         decision = true;
+    }
+
+    @FXML
+    private void exportInterests(ActionEvent event) {
+        setMenuVisible(false, false, true);
+        decision = false;
     }
 }

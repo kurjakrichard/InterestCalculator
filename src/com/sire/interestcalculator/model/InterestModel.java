@@ -115,7 +115,7 @@ public class InterestModel {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
                 LocalDate rateDate = LocalDate.parse(rs.getString("rateDate"), formatter);
                 InterestRate actualRate = new InterestRate(rateDate, rs.getDouble("rate"));
-                System.out.println(actualRate.getRateDate() + ", " + actualRate.getRate());
+                //System.out.println(actualRate.getRateDate() + ", " + actualRate.getRate());
                 rates.add(actualRate);
                 }
         } catch (SQLException e) {

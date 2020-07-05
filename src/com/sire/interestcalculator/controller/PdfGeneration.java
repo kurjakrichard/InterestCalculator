@@ -18,6 +18,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.sire.interestcalculator.domain.InterestElement;
+import com.sire.interestcalculator.domain.InterestElementString;
 import com.sire.interestcalculator.domain.InterestRateString;
 import java.io.FileOutputStream;
 import javafx.collections.ObservableList;
@@ -35,7 +36,7 @@ public class PdfGeneration {
             document.open();
             //logo
             Image image1 = Image.getInstance(getClass().getResource("/logo.jpg"));
-            image1.scaleToFit(526, 256);
+            image1.scaleToFit(600, 275);
             image1.setAbsolutePosition(35f, 550f);
             document.add(image1);
 
@@ -44,7 +45,7 @@ public class PdfGeneration {
             float[] columnWidths = {1, 3, 4};
             PdfPTable table = new PdfPTable(columnWidths);
             table.setWidthPercentage(100);
-            PdfPCell cell = new PdfPCell(new Phrase("Kamatok"));
+            PdfPCell cell = new PdfPCell(new Phrase("Kamat alakulása"));
             cell.setBackgroundColor(BaseColor.WHITE);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             cell.setColspan(3);
@@ -54,7 +55,7 @@ public class PdfGeneration {
             table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell("Sorszám");
             table.addCell("Dátum");
-            table.addCell("Kamat");
+            table.addCell("Kamatmérték (%)");
 
             table.setHeaderRows(1);
 
@@ -75,7 +76,7 @@ public class PdfGeneration {
         }
     }
 
-    void pdfGeneraton(String fileName, ObservableList<InterestElement> interests) {
+    void pdfGeneraton(String fileName, ObservableList<InterestElementString> interests) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

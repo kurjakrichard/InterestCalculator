@@ -5,7 +5,6 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Reflection?>
@@ -16,18 +15,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="490.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sire.interestcalculator.controller.InterestFXMLController">
+<AnchorPane id="AnchorPane" prefHeight="490.0" prefWidth="702.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sire.interestcalculator.controller.InterestFXMLController">
     <children>
-        <SplitPane id="mainSplit" fx:id="mainSplit" dividerPositions="0.29797979797979796" layoutX="14.0" layoutY="42.0" prefHeight="490.0" prefWidth="630.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <SplitPane id="mainSplit" fx:id="mainSplit" dividerPositions="0.24571428571428572" layoutX="14.0" layoutY="42.0" prefHeight="490.0" prefWidth="630.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="489.0" prefWidth="159.0">
                     <children>
                         <StackPane id="menuPane" fx:id="menuPane" prefHeight="356.8" prefWidth="177.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>
-                        <Pane id="calculatorPane" fx:id="calculatorPane" prefHeight="356.8" prefWidth="422.4" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Pane id="calculatorPane" fx:id="calculatorPane" prefHeight="356.8" prefWidth="422.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <VBox>
                                     <children>
@@ -59,24 +58,24 @@
                                         </HBox>
                                     </children>
                                 </VBox>
-                                <VBox alignment="CENTER" layoutX="1.0" layoutY="175.0" prefHeight="269.0" prefWidth="427.0">
+                                <VBox alignment="CENTER" layoutX="1.0" layoutY="175.0" prefHeight="269.0" prefWidth="526.0">
                                     <children>
                                         <Button id="calculation" fx:id="calculation" mnemonicParsing="false" onAction="#calculation" text="Számolás">
                                             <VBox.margin>
                                                 <Insets bottom="10.0" top="10.0" />
                                             </VBox.margin>
                                         </Button>
-                                        <TableView prefHeight="231.0" prefWidth="427.0">
-                                            <columns>
-                                                <TableColumn prefWidth="147.99994206428528" text="Időszak" />
-                                                <TableColumn minWidth="4.0" prefWidth="278.3999969482422" text="Késedelmi kamat összege (Ft)" />
-                                            </columns>
+                                        <TableView id="interestTable" fx:id="interestTable" prefHeight="223.0" prefWidth="507.0">
+                                            <placeholder>
+                                                <Label text="Nincs adat." />   
+                                            </placeholder> 
                                         </TableView>
                                     </children>
                                 </VBox>
+                        <Button id="exportInterests" fx:id="exportInterests" layoutX="227.0" layoutY="450.0" mnemonicParsing="false" onAction="#exportInterests" text="Exportálás" />
                             </children>
                         </Pane>
-                        <Pane id="ratePane" fx:id="ratePane" prefHeight="356.8" prefWidth="422.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Pane id="ratePane" fx:id="ratePane" prefHeight="356.8" prefWidth="422.4" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <VBox>
                                     <children>
