@@ -50,7 +50,7 @@ public class InterestModel {
     }
 
     /**
-     * Create a new table in the test database
+     * Create a new table in the rates database
      *
      */
     public final void createNewTableIfNotExist() {

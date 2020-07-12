@@ -222,8 +222,8 @@ public class InterestFXMLController implements Initializable {
     }
 
     private void setMenuData() {
-        TreeItem<String> treeItemRoot1 = new TreeItem<>("Menü");
-        TreeView<String> treeView = new TreeView<>(treeItemRoot1);
+        TreeItem<String> treeItemRoot = new TreeItem<>("Menü");
+        TreeView<String> treeView = new TreeView<>(treeItemRoot);
         treeView.setShowRoot(false);
 
         Node exitNode = new ImageView(new Image(getClass().getResourceAsStream("/Actions-application-exit-icon.png")));
@@ -238,7 +238,7 @@ public class InterestFXMLController implements Initializable {
         TreeItem<String> nodeItemA2 = new TreeItem<>(MENU_INTEREST, rateNode);
 
         nodeItemA.getChildren().addAll(nodeItemA1, nodeItemA2);
-        treeItemRoot1.getChildren().addAll(nodeItemA, nodeItemB);
+        treeItemRoot.getChildren().addAll(nodeItemA, nodeItemB);
         menuPane.getChildren().add(treeView);
 
         treeView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
