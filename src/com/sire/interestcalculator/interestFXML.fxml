@@ -33,7 +33,7 @@
                             <children>
                                 <VBox>
                                     <children>
-                                        <Label alignment="CENTER" prefHeight="38.0" prefWidth="421.0" text="Késedelmi kamat számítása">
+                                        <Label alignment="CENTER" prefHeight="60.0" prefWidth="458.0" text="Késedelmi kamat számítása">
                                             <font>
                                                 <Font name="Calibri Bold" size="24.0" />
                                             </font>
@@ -41,42 +41,42 @@
                                                 <Insets bottom="15.0" top="10.0" />
                                             </padding>
                                         </Label>
-                              <GridPane prefHeight="108.0" prefWidth="457.0">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="202.0" minWidth="10.0" prefWidth="171.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="251.0" minWidth="10.0" prefWidth="251.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                                  <Label prefHeight="18.0" prefWidth="151.0" text="Fizetési határidő:">
-                                       <padding>
-                                          <Insets left="10.0" />
-                                       </padding>
-                                    </Label>
-                                                  <DatePicker id="inputDueDate" fx:id="inputDueDate" prefHeight="26.0" prefWidth="298.0" promptText="          ÉÉÉÉ.HH.NN" showWeekNumbers="true" GridPane.columnIndex="1" />
-                                                  <Label contentDisplay="CENTER" prefHeight="18.0" prefWidth="154.0" text="Kiegyenlítés napja:" textAlignment="CENTER" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets left="10.0" />
-                                       </GridPane.margin>
-                                    </Label>
-                                                  <DatePicker id="inputPaymentDate" fx:id="inputPaymentDate" prefHeight="26.0" prefWidth="298.0" promptText="          ÉÉÉÉ.HH.NN" showWeekNumbers="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                  <Label contentDisplay="CENTER" prefHeight="22.0" prefWidth="151.0" text="Összeg:" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets left="10.0" />
-                                       </GridPane.margin>
-                                    </Label>
-                                                  <TextField id="inputAmount" fx:id="inputAmount" alignment="CENTER_RIGHT" promptText="0,00" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                 </children>
-                              </GridPane>
+                                        <GridPane prefHeight="108.0" prefWidth="457.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="202.0" minWidth="10.0" prefWidth="171.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="251.0" minWidth="10.0" prefWidth="251.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                            <children>
+                                                <Label contentDisplay="CENTER" prefHeight="18.0" prefWidth="200.0" text="Fizetési határidő:">
+                                                        <GridPane.margin>
+                                                        <Insets left="10.0" />
+                                                    </GridPane.margin>
+                                                </Label>
+                                                <DatePicker id="inputDueDate" fx:id="inputDueDate" prefHeight="26.0" prefWidth="298.0" promptText="          ÉÉÉÉ.HH.NN" showWeekNumbers="true" GridPane.columnIndex="1" />
+                                                <Label contentDisplay="CENTER" prefHeight="18.0" prefWidth="200.0" text="Kiegyenlítés napja:" GridPane.rowIndex="1">
+                                                    <GridPane.margin>
+                                                        <Insets left="10.0" />
+                                                    </GridPane.margin>
+                                                </Label>
+                                                <DatePicker id="inputPaymentDate" fx:id="inputPaymentDate" prefHeight="26.0" prefWidth="298.0" promptText="          ÉÉÉÉ.HH.NN" showWeekNumbers="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label contentDisplay="CENTER" prefHeight="22.0" prefWidth="193.0" text="Összeg:" GridPane.rowIndex="2">
+                                                    <GridPane.margin>
+                                                        <Insets left="10.0" />
+                                                    </GridPane.margin>
+                                                </Label>
+                                                <TextField id="inputAmount" fx:id="inputAmount" alignment="CENTER_RIGHT" promptText="0,00" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                            </children>
+                                        </GridPane>
                                     </children>
                                 </VBox>
                                 <VBox alignment="CENTER" layoutX="1.0" layoutY="175.0" prefHeight="269.0" prefWidth="526.0">
                                     <children>
-                                        <Button id="calculation" fx:id="calculation" mnemonicParsing="false" onAction="#calculation" text="Számolás">
+                                        <Button id="calculation" fx:id="calculation" mnemonicParsing="false" onAction="#calculation" styleClass="button-blue" text="Számolás">
                                             <VBox.margin>
                                                 <Insets bottom="10.0" top="10.0" />
                                             </VBox.margin>
@@ -88,21 +88,21 @@
                                         </TableView>
                                     </children>
                                 </VBox>
-                        <Button id="exportInterests" fx:id="exportInterests" layoutX="227.0" layoutY="450.0" mnemonicParsing="false" onAction="#exportInterests" text="Exportálás" />
+                                <Button id="exportInterests" fx:id="exportInterests" layoutX="227.0" layoutY="450.0" mnemonicParsing="false" onAction="#exportInterests" text="Exportálás" />
                             </children>
                         </Pane>
                         <Pane id="ratePane" fx:id="ratePane" prefHeight="356.8" prefWidth="422.4" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <VBox>
                                     <children>
-                              <Label alignment="CENTER" prefHeight="38.0" prefWidth="421.0" text="Kamatok">
-                                 <font>
-                                    <Font name="Calibri Bold" size="24.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets bottom="15.0" top="10.0" />
-                                 </padding>
-                              </Label>
+                                        <Label alignment="CENTER" prefHeight="38.0" prefWidth="421.0" text="Kamatok">
+                                            <font>
+                                                <Font name="Calibri Bold" size="24.0" />
+                                            </font>
+                                            <padding>
+                                                <Insets bottom="15.0" top="10.0" />
+                                            </padding>
+                                        </Label>
                                         <TableView id="rateTable" fx:id="rateTable" editable="true" prefHeight="262.0" prefWidth="427.0">
                                             <placeholder>
                                                 <Label text="Nincs adat." />   
@@ -142,7 +142,7 @@
                                         </HBox>
                                     </children>
                                 </VBox>
-                        <Button id="exportRateList" fx:id="exportRateList" layoutX="188.0" layoutY="446.0" mnemonicParsing="false" onAction="#exportRateList" text="Exportálás" />
+                                <Button id="exportRateList" fx:id="exportRateList" layoutX="188.0" layoutY="446.0" mnemonicParsing="false" onAction="#exportRateList" text="Exportálás" />
                             </children>
                         </Pane>
                         <Pane id="exportPane" fx:id="exportPane" prefHeight="444.0" prefWidth="427.2" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
