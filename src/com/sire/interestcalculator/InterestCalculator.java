@@ -22,7 +22,7 @@ public class InterestCalculator extends Application{
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("interestFXML.fxml"));
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(com.sire.interestcalculator.InterestCalculator.class.getResource("InterestCalculator.css").toExternalForm());
+        scene.getStylesheets().add(com.sire.interestcalculator.InterestCalculator.class.getResource("Style.css").toExternalForm());
         stage.setTitle("Kamatmágus");
         stage.getIcons().add(new Image("8tracks-icon.png"));
         stage.setScene(scene);
