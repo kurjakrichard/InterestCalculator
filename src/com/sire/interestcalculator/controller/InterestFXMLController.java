@@ -25,6 +25,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -70,12 +71,6 @@ public class InterestFXMLController implements Initializable {
     private Button exportButton;
     @FXML
     private TextField inputFilename;
-    @FXML
-    private VBox alertBox;
-    @FXML
-    private Label alertText;
-    @FXML
-    private Button alertButton;
     @FXML
     private TableView rateTable;
     @FXML
@@ -277,13 +272,11 @@ public class InterestFXMLController implements Initializable {
         exportPane.setVisible(exportPaneVisible);
     }
 
-    private void alert(String text) {
-        mainSplit.setDisable(true);
-        mainSplit.setOpacity(0.4);
-        alertBox.setVisible(true);
-        alertBox.setDisable(false);
-        alertText.setText(text);
-
+    private void alert(Alert.AlertType alertType, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @FXML
@@ -297,12 +290,12 @@ public class InterestFXMLController implements Initializable {
                 interestModel.addRate(newRateString);
                 clearInputRateFields();
             } else {
-                alert("A kamatkulcsnak 0 és 100 közé kell esnie!");
+                alert(Alert.AlertType.ERROR,"A kamatkulcsnak 0 és 100 közé kell esnie!");
                 clearInputRateFields();
             }
 
         } catch (Exception e) {
-            alert("A dátumot és a kamatot helyesen add meg!");
+            alert(Alert.AlertType.ERROR, "A dátumot és a kamatot helyesen add meg!");
             clearInputRateFields();
         }
     }
@@ -322,15 +315,8 @@ public class InterestFXMLController implements Initializable {
             }
             inputFilename.clear();
         } else {
-            alert("Adj meg egy fájlnevet!");
+            alert(Alert.AlertType.ERROR, "Adj meg egy fájlnevet!");
         }
-    }
-
-    @FXML
-    private void alertButton(ActionEvent event) {
-        mainSplit.setDisable(false);
-        mainSplit.setOpacity(1);
-        alertBox.setVisible(false);
     }
 
     @FXML
@@ -358,7 +344,7 @@ public class InterestFXMLController implements Initializable {
                 interests.add(element.convertToString());
                 sumOfTheDays = element.getDays();
                 sumOfTheInterest = element.getInterest();
-             } else {
+            } else {
                 previousDate = inputDueDate.getValue();
                 InterestElement element = new InterestElement();
                 for (int i = 0; i < rateList.size() - 1; i++) {
@@ -375,7 +361,7 @@ public class InterestFXMLController implements Initializable {
                 interestTable.setItems(interests);
             }
         } catch (Exception e) {
-            alert("Kérlek adj meg minden adatot!");
+            alert(Alert.AlertType.ERROR, "Kérlek adj meg minden adatot!");
         }
     }
 

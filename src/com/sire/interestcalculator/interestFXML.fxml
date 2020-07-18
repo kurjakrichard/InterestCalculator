@@ -170,18 +170,5 @@
                 </AnchorPane>
             </items>
         </SplitPane>
-        <VBox id="alertBox" fx:id="alertBox" alignment="CENTER" disable="true" layoutX="190.0" layoutY="134.0" prefHeight="354.0" prefWidth="438.0" visible="false">
-            <children>
-                <Label id="alertText" fx:id="alertText" alignment="CENTER" prefHeight="38.0" prefWidth="438.0" textAlignment="CENTER">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                    <padding>
-                        <Insets bottom="10.0" />
-                    </padding>
-                </Label>
-                <Button id="alertButton" fx:id="alertButton" alignment="BASELINE_CENTER" mnemonicParsing="false" onAction="#alertButton" text="Ok" textAlignment="CENTER" />
-            </children>
-        </VBox>
     </children>
 </AnchorPane>
